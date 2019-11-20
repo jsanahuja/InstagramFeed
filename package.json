@@ -1,0 +1,39 @@
+{
+    "name": "InstagramFeed",
+    "description": "Instagram Feed without access token. Not using the Instagram API",
+    "homepage": "https://github.com/jsanahuja/InstagramFeed",
+    "version": "1.0.0",
+    "keywords": [
+      "instagram",
+      "feed",
+      "InstagramFeed",
+      "without",
+      "access",
+      "token"
+    ],
+    "author": {
+      "name": "Javier Sanahuja",
+      "email": "bannss1@gmail.com"
+    },
+    "contributors": [
+      {
+        "name": "Cristian Sanahuja",
+        "email": "csanahuja@gmail.com"
+      }
+    ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/jsanahuja/InstagramFeed.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+      "grunt": "^1.0.1",
+      "grunt-contrib-qunit": "^1.3.0",
+      "grunt-node-minify": "^1.5.0"
+    },
+    "scripts": {
+      "test": "grunt test",
+      "dist": "grunt dist"
+    }
+  }
+  
