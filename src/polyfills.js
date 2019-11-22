@@ -1,3 +1,15 @@
+/*
+ * InstagramFeed
+ *
+ * @version 1.0.0
+ *
+ * @author Javier Sanahuja Liebana <bannss1@gmail.com>
+ * @contributor csanahuja <csanahuja@gmail.com>
+ *
+ * https://github.com/jsanahuja/InstagramFeed
+ *
+ */
+
 /** Object.keys 
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys#Polyfill
 */

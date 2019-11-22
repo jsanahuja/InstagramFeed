@@ -1,14 +1,14 @@
 /*
- InstagramFeed
-
- @version 1.0.0
-
- @author Javier Sanahuja Liebana <bannss1@gmail.com>
- @contributor csanahuja <csanahuja@gmail.com>
-
- https://github.com/jsanahuja/jquery.instagramFeed
-
-*/
+ * InstagramFeed
+ *
+ * @version 1.0.0
+ *
+ * @author Javier Sanahuja Liebana <bannss1@gmail.com>
+ * @contributor csanahuja <csanahuja@gmail.com>
+ *
+ * https://github.com/jsanahuja/InstagramFeed
+ *
+ */
 var InstagramFeed = (function(){
     var defaults = {
         'host': "https://www.instagram.com/",
