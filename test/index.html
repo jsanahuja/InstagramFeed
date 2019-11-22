@@ -22,14 +22,14 @@
     <div style="display:none" id="instagram-feed5"></div>
 
     <script src="../src/polyfills.js"></script>
-    <script src="../src/instagramFeed.js"></script>
+    <script src="../src/InstagramFeed.js"></script>
     <script>
         (function($){
             $(window).on('load', function(){
                 QUnit.test("Test1", function( assert ) {
                     var failed = false;
                     try{
-                        InstagramFeed({
+                        var obj = new InstagramFeed({
                             'username': 'instagram',
                             'container': document.getElementById("instagram-feed1"),
                             'display_profile': true,
@@ -41,17 +41,17 @@
                             'items': 8,
                             'items_per_row': 4,
                             'margin': 1
-                        }); 
+                        });
+                        failed = !obj.valid;
                     }catch(e){
                         failed = true;
                     }
                     assert.ok(failed === false, "Passed Test1!");
                 });
-
                 QUnit.test("Test2", function( assert ) {
                     var failed = false;
                     try{
-                        InstagramFeed({
+                        var obj = new InstagramFeed({
                             'username': 'github',
                             'container': document.getElementById("instagram-feed2"),
                             'display_profile': false,
@@ -64,6 +64,7 @@
                             'items_per_row': 4,
                             'margin': 1
                         });
+                        failed = !obj.valid;
                     }catch(e){
                         failed = true;
                     }
@@ -73,7 +74,7 @@
                 QUnit.test("Test3", function( assert ) {
                     var failed = false;
                     try{
-                        InstagramFeed({
+                        var obj = new InstagramFeed({
                             'username': 'zara',
                             'container': document.getElementById("instagram-feed3"),
                             'display_profile': false,
@@ -86,6 +87,7 @@
                             'items_per_row': 6,
                             'margin': 0.25
                         });
+                        failed = !obj.valid;
                     }catch(e){
                         failed = true;
                     }
@@ -95,7 +97,7 @@
                 QUnit.test("Test4", function( assert ) {
                     var failed = false;
                     try{
-                        InstagramFeed({
+                        var obj = new InstagramFeed({
                             'username': 'fcbarcelona',
                             'container': document.getElementById("instagram-feed4"),
                             'display_profile': false,
@@ -109,6 +111,7 @@
                             'items_per_row': 4,
                             'margin': 1
                         });
+                        failed = !obj.valid;
                     }catch(e){
                         failed = true;
                     }
@@ -118,13 +121,14 @@
                 QUnit.test("Test5", function( assert ) {
                     var failed = false;
                     try{
-                        InstagramFeed({
+                        var obj = new InstagramFeed({
                             'username': 'travisci',
                             'get_data': true,
                             'callback': function(json){
                                 document.getElementById("instagram-feed5").innerHTML = json;
                             }
                         });
+                        failed = !obj.valid;
                     }catch(e){
                         failed = true;
                     }
@@ -134,7 +138,7 @@
                 QUnit.test("Test6", function( assert ) {
                     var failed = false;
                     try{
-                        InstagramFeed({
+                        var obj = new InstagramFeed({
                             'tag': 'paradise',
                             'container': document.getElementById("instagram-feed4"),
                             'display_profile': true,
@@ -143,6 +147,7 @@
                             'items_per_row': 5,
                             'margin': 0.5
                         });
+                        failed = !obj.valid;
                     }catch(e){
                         failed = true;
                     }
@@ -150,23 +155,23 @@
                 });
                 
                 QUnit.test("Test7", function( assert ) {
-                    var status = InstagramFeed({});
-                    assert.ok(status === false, "Passed Test7 (no username nor tag)!");
+                    var obj = new InstagramFeed({});
+                    assert.ok(obj.valid === false, "Passed Test7 (no username nor tag)!");
                 });
 
                 QUnit.test("Test8", function( assert ) {
-                    var status = InstagramFeed({
+                    var obj = new InstagramFeed({
                         "username": "travisci"
                     });
-                    assert.ok(status === false, "Passed Test8! (no container)");
+                    assert.ok(obj.valid === false, "Passed Test8! (no container)");
                 });
 
                 QUnit.test("Test9", function( assert ) {
-                    var status = InstagramFeed({
+                    var obj = new InstagramFeed({
                         "username": "travisci",
                         "get_data": true
                     });
-                    assert.ok(status === false, "Passed Test9! (no callback)");
+                    assert.ok(obj.valid === false, "Passed Test9! (no callback)");
                 });
             });
         })(jQuery);

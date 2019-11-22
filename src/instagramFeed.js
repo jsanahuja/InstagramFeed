@@ -36,31 +36,28 @@ var InstagramFeed = (function(){
         "640": 4
     };
 
-    return function InstagramFeed(opts){
+    return function(opts){
         this.options = Object.assign({}, defaults);
         this.options = Object.assign(this.options, opts);
-        console.log(options);
-        this.is_tag = this.username == "";
+        this.is_tag = this.options.username == "";
 
-        /* option validations */
+        this.valid = true;
         if(this.options.username == "" && this.options.tag == ""){
             console.error("InstagramFeed: Error, no username or tag defined.");
-            return false;
-        }
-        if(!this.options.get_data && this.options.container == ""){
+            this.valid = false;
+        }else if(!this.options.get_data && this.options.container == ""){
             console.error("InstagramFeed: Error, no container found.");
-            return false;
-        }
-        if(this.options.get_data && typeof this.options.callback != "function"){
+            this.valid = false;
+        }else if(this.options.get_data && typeof this.options.callback != "function"){
             console.error("InstagramFeed: Error, invalid or undefined callback for get_data");
-            return false;
+            this.valid = false;
         }
-
 
         this.get = function(callback){
             var url = this.is_tag ? this.options.host + "explore/tags/" + this.options.tag : this.options.host + this.options.username,
                 xhr = new XMLHttpRequest();
-                
+
+            var _this = this;
             xhr.onload = function(e){
                 if(xhr.readyState === 4){
                     if (xhr.status === 200) {
@@ -68,10 +65,11 @@ var InstagramFeed = (function(){
                         data = JSON.parse(data.substr(0, data.length - 1));
                         data = data.entry_data.ProfilePage || data.entry_data.TagPage || null;
                         if(data === null){
+                            console.log(url);
                             console.error("InstagramFeed: Request error. No data retrieved: " + xhr.statusText);
                         }else{
                             data = data[0].graphql.user || data[0].graphql.hashtag;
-                            callback(data);
+                            callback(data, _this);
                         }
                     } else {
                         console.error("InstagramFeed: Request error. Response: " + xhr.statusText);
@@ -108,19 +106,19 @@ var InstagramFeed = (function(){
             if(this.options.display_profile){
                 html += "<div class='instagram_profile'" +styles.profile_container +">";
                 html += "<img class='instagram_profile_image' src='"+ data.profile_pic_url +"' alt='"+ data.name +" profile pic'"+ styles.profile_image +" />";
-                if(is_tag)
+                if(this.is_tag)
                     html += "<p class='instagram_tag'"+ styles.profile_name +"><a href='https://www.instagram.com/explore/tags/"+ this.options.tag +"' rel='noopener' target='_blank'>#"+ this.options.tag +"</a></p>";
                 else
                     html += "<p class='instagram_username'"+ styles.profile_name +">@"+ data.full_name +" (<a href='https://www.instagram.com/"+ this.options.username +"' rel='noopener' target='_blank'>@"+ this.options.username+"</a>)</p>";
         
-                if(!is_tag && this.options.display_biography)
+                if(!this.is_tag && this.options.display_biography)
                     html += "<p class='instagram_biography'"+ styles.profile_biography +">"+ data.biography +"</p>";
     
                 html += "</div>";
             }
 
             // Gallery
-            if(options.display_gallery){
+            if(this.options.display_gallery){
                 var image_index = typeof image_sizes[this.options.image_size] !== "undefined" ? image_sizes[this.options.image_size] : image_sizes[640];
 
                 if(typeof data.is_private !== "undefined" && data.is_private === true){
@@ -177,15 +175,16 @@ var InstagramFeed = (function(){
         };
 
         this.run = function(){
-            this.get(function(data){
-                if(this.options.get_data)
-                    this.options.callback(data);
+            this.get(function(data, instance){
+                if(instance.options.get_data)
+                    instance.options.callback(data);
                 else
-                    this.display(data);
+                    instance.display(data);
             });
         };
 
-        this.run();
-        return true;
+        if(this.valid){
+            this.run();
+        }
     };
 })();

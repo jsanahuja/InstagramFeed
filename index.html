@@ -105,7 +105,7 @@
                      <ul class="list-unstyled text-md-right">
                          <li>
                              <a class="text-white text-underline d-flex align-items-center" target="_blank" rel="noopener"
-                                 href="https://github.com/jsanahuja/jquery.instagramFeed">
+                                 href="https://www.sowecms.com/demos/InstagramFeed/">
  
                                  <span class="mr-2 flex-grow-1">Visit our repository</span>
                                  <svg class="octicon octicon-mark-github v-align-middle" fill="white" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
@@ -121,8 +121,8 @@
                          </li>
                          <li class="pt-3">
                              <a class="text-white text-right" target="_blank" rel="noopener"
-                                 href="https://travis-ci.com/jsanahuja/jquery.instagramFeed">
-                                 <img src="https://travis-ci.com/jsanahuja/jquery.instagramFeed.svg?branch=master" alt="Build Status" />
+                                 href="https://travis-ci.com/jsanahuja/InstagramFeed">
+                                 <img src="https://travis-ci.com/jsanahuja/InstagramFeed.svg?branch=master" alt="Build Status" />
                              </a>
                          </li>
                      </ul>
@@ -332,24 +332,22 @@
                      <div id="instagram-feed1" class="instagram_feed"></div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script&gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 'username': 'instagram',
-                 'container': "#instagram-feed1",
-                 'display_profile': true,
-                 'display_biography': true,
-                 'display_gallery': true,
-                 'callback': null,
-                 'styling': true,
-                 'items': 8,
-                 'items_per_row': 4,
-                 'margin': 1 
-             });
-         });
-     })(jQuery);
+     (function(){
+        new InstagramFeed({
+			'username': 'instagram',
+			'container': "#instagram-feed1",
+			'display_profile': true,
+			'display_biography': true,
+			'display_gallery': true,
+			'callback': null,
+			'styling': true,
+			'items': 8,
+			'items_per_row': 4,
+			'margin': 1 
+		 });
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>
@@ -362,24 +360,22 @@
                      <div id="instagram-feed2" class="instagram_feed"></div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script&gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 'username': 'github',
-                 'container': "#instagram-feed2",
-                 <strong>'display_profile': false,
-                 'display_biography': false,</strong>
-                 'display_gallery': true,
-                 'callback': null,
-                 'styling': true,
-                 'items': 8,
-                 'items_per_row': 4,
-                 'margin': 1 
-             });
-         });
-     })(jQuery);
+     (function(){
+		new InstagramFeed({
+			'username': 'github',
+			'container': "#instagram-feed2",
+			<strong>'display_profile': false,
+			'display_biography': false,</strong>
+			'display_gallery': true,
+			'callback': null,
+			'styling': true,
+			'items': 8,
+			'items_per_row': 4,
+			'margin': 1 
+		});
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>                
@@ -392,24 +388,22 @@
                      <div id="instagram-feed3" class="instagram_feed"></div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script&gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 'username': 'zara',
-                 'container': "#instagram-feed3",
-                 'display_profile': false,
-                 'display_biography': false,
-                 'display_gallery': true,
-                 'callback': null,
-                 'styling': true,
-                 <strong>'items': 12,
-                 'items_per_row': 6,
-                 'margin': 0.25</strong>
-             });
-         });
-     })(jQuery);
+     (function(){
+        new InstagramFeed({
+			'username': 'zara',
+			'container': "#instagram-feed3",
+			'display_profile': false,
+			'display_biography': false,
+			'display_gallery': true,
+			'callback': null,
+			'styling': true,
+			<strong>'items': 12,
+			'items_per_row': 6,
+			'margin': 0.25</strong>
+		 });
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>                
@@ -422,21 +416,19 @@
                      <div id="instagram-feed4" class="instagram_feed"></div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script &gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 <strong>'tag': 'paradise',</strong>
-                 'container': "#instagram-feed4",
-                 'display_profile': true,
-                 'display_gallery': true,
-                 'items': 100,
-                 'items_per_row': 5,
-                 'margin': 0.5
-             });
-         });
-     })(jQuery);
+     (function(){
+        new InstagramFeed({
+			<strong>'tag': 'paradise',</strong>
+			'container': "#instagram-feed4",
+			'display_profile': true,
+			'display_gallery': true,
+			'items': 100,
+			'items_per_row': 5,
+			'margin': 0.5
+		 });
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>                
@@ -449,25 +441,23 @@
                      <div id="instagram-feed5" class="instagram_feed"></div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script &gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 'username': 'fcbarcelona',
-                 'container': "#instagram-feed5",
-                 'display_profile': false,
-                 'display_biography': false,
-                 'display_gallery': false,
-                 <strong>'display_igtv': true,</strong>
-                 'callback': null,
-                 'styling': true,
-                 'items': 8,
-                 'items_per_row': 4,
-                 'margin': 1 
-             });
-         });
-     })(jQuery);
+     (function(){
+        new InstagramFeed({
+			'username': 'fcbarcelona',
+			'container': "#instagram-feed5",
+			'display_profile': false,
+			'display_biography': false,
+			'display_gallery': false,
+			<strong>'display_igtv': true,</strong>
+			'callback': null,
+			'styling': true,
+			'items': 8,
+			'items_per_row': 4,
+			'margin': 1 
+		});
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>                
@@ -500,23 +490,21 @@
                      </div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script&gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 'username': 'instagram',
-                 'container': "#instagram-feed3",
-                 'display_profile': true,
-                 'display_biography': true,
-                 'display_gallery': true,
-                 'display_igtv': true,
-                 'callback': null,
-                 <strong>'styling': false,</strong>
-                 'items': 12,
-             });
-         });
-     })(jQuery);
+     (function(){
+        new InstagramFeed({
+			'username': 'instagram',
+			'container': "#instagram-feed3",
+			'display_profile': true,
+			'display_biography': true,
+			'display_gallery': true,
+			'display_igtv': true,
+			'callback': null,
+			<strong>'styling': false,</strong>
+			'items': 12,
+		});
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>                
@@ -533,19 +521,17 @@
                      </div>
                      <div class="section_code py-3">
                          <div>Code:</div>
- <pre><code class="language-html">&lt;script type="text/javascript" src="jquery.instagramFeed.min.js"&gt;&lt;/script&gt;
+ <pre><code class="language-html">&lt;script type="text/javascript" src="InstagramFeed.min.js"&gt;&lt;/script&gt;
  &lt;script type="text/javascript"&gt;
-     (function($){
-         $(window).on('load', function(){
-             InstagramFeed({
-                 'username': 'instagram',
-                 <strong>'get_data': true,
-                 'callback': function(data){
-                     $('#jsonHere').html(JSON.stringify(data, null, 2));
-                 }</strong>
-             });
-         });
-     })(jQuery);
+     (function(){
+        new InstagramFeed({
+            'username': 'instagram',
+            <strong>'get_data': true,
+            'callback': function(data){
+				$('#jsonHere').html(JSON.stringify(data, null, 2));
+            }</strong>
+        });
+     })();
  &lt;/script&gt;
  </code></pre>
                      </div>                
@@ -571,93 +557,90 @@
          </a>
      </footer>
  
-     <script src="jquery.instagramFeed.min.js"></script>
+     <script src="dist/InstagramFeed.min.js"></script>
      <script>
-         (function($){
-             $(window).on('load', function(){
-                 InstagramFeed({
-                     'username': 'instagram',
-                     'container': "#instagram-feed1",
-                     'display_profile': true,
-                     'display_biography': true,
-                     'display_gallery': true,
-                     'callback': null,
-                     'styling': true,
-                     'items': 8,
-                     'items_per_row': 4,
-                     'margin': 1
-                 }); 
-                 
-                 InstagramFeed({
-                     'username': 'github',
-                     'container': "#instagram-feed2",
-                     'display_profile': false,
-                     'display_biography': false,
-                     'display_gallery': true,
-                     'callback': null,
-                     'styling': true,
-                     'items': 8,
-                     'items_per_row': 4,
-                     'margin': 1
-                 });
-                 InstagramFeed({
-                     'username': 'zara',
-                     'container': "#instagram-feed3",
-                     'display_profile': false,
-                     'display_biography': false,
-                     'display_gallery': true,
-                     'callback': null,
-                     'styling': true,
-                     'items': 12,
-                     'items_per_row': 6,
-                     'margin': 0.25
-                 });
-                 InstagramFeed({
-                     'tag': 'paradise',
-                     'container': "#instagram-feed4",
-                     'display_profile': true,
-                     'display_gallery': true,
-                     'items': 100,
-                     'items_per_row': 5,
-                     'margin': 0.5
-                 });
-                 InstagramFeed({
-                     'username': 'fcbarcelona',
-                     'container': "#instagram-feed5",
-                     'display_profile': false,
-                     'display_biography': false,
-                     'display_gallery': false,
-                     'display_igtv': true,
-                     'callback': null,
-                     'styling': true,
-                     'items': 8,
-                     'items_per_row': 4,
-                     'margin': 1
-                 });
-                 
-                 //example 7
-                 InstagramFeed({
-                     'username': 'instagram',
-                     'get_data': true,
-                     'callback': function(data){
-                         $('#jsonHere').html(JSON.stringify(data, null, 2));
-                     }
-                 });
-                 
-                 // Show back to top button if distance from top > 0
-                 $(window).scroll(function(){ 
-                     var viewportTop = $(window).scrollTop() + $(window).height();
-              
-                     if($(window).scrollTop() > 10){
-                         $('#btn-top').addClass('d-block');
-                         $('#btn-top').removeClass('d-none');
-                     }else{
-                         $('#btn-top').addClass('d-none');
-                         $('#btn-top').removeClass('d-block');
-                     }
-                 });
- 
-             });
+         (function(){
+			new InstagramFeed({
+				'username': 'instagram',
+				'container': document.getElementById("instagram-feed1"),
+				'display_profile': true,
+				'display_biography': true,
+				'display_gallery': true,
+				'callback': null,
+				'styling': true,
+				'items': 8,
+				'items_per_row': 4,
+				'margin': 1
+			}); 
+			
+			new InstagramFeed({
+				'username': 'github',
+				'container': document.getElementById("instagram-feed2"),
+				'display_profile': false,
+				'display_biography': false,
+				'display_gallery': true,
+				'callback': null,
+				'styling': true,
+				'items': 8,
+				'items_per_row': 4,
+				'margin': 1
+			});
+			new InstagramFeed({
+				'username': 'zara',
+				'container': document.getElementById("instagram-feed3"),
+				'display_profile': false,
+				'display_biography': false,
+				'display_gallery': true,
+				'callback': null,
+				'styling': true,
+				'items': 12,
+				'items_per_row': 6,
+				'margin': 0.25
+			});
+			new InstagramFeed({
+				'tag': 'paradise',
+				'container': document.getElementById("instagram-feed4"),
+				'display_profile': true,
+				'display_gallery': true,
+				'items': 100,
+				'items_per_row': 5,
+				'margin': 0.5
+			});
+			new InstagramFeed({
+				'username': 'fcbarcelona',
+				'container': document.getElementById("instagram-feed5"),
+				'display_profile': false,
+				'display_biography': false,
+				'display_gallery': false,
+				'display_igtv': true,
+				'callback': null,
+				'styling': true,
+				'items': 8,
+				'items_per_row': 4,
+				'margin': 1
+			});
+			
+			new InstagramFeed({
+				'username': 'instagram',
+				'get_data': true,
+				'callback': function(data){
+					document.getElementById("jsonHere").innerHTML = JSON.stringify(data, null, 2);
+				}
+			});
+		})();
+        (function($){
+			 // Show back to top button if distance from top > 0
+			 $(window).scroll(function(){ 
+				 var viewportTop = $(window).scrollTop() + $(window).height();
+		  
+				 if($(window).scrollTop() > 10){
+					 $('#btn-top').addClass('d-block');
+					 $('#btn-top').removeClass('d-none');
+				 }else{
+					 $('#btn-top').addClass('d-none');
+					 $('#btn-top').removeClass('d-block');
+				 }
+			 });
          })(jQuery);
      </script>
  </body>

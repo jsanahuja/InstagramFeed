@@ -3,7 +3,7 @@ module.exports = function(grunt) {
         'node-minify': {
             gcc: {
                 files: {
-                    'dist/instagramFeed.min.js': ['src/*.js']
+                    'dist/InstagramFeed.min.js': ['src/*.js']
                 }
             }
         },
