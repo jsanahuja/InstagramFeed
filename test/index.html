@@ -1,0 +1,193 @@
+<!--
+ * InstagramFeed
+ *
+ * @version 1.0.0
+ *
+ * @author Javier Sanahuja Liebana <bannss1@gmail.com>
+ * @contributor csanahuja <csanahuja@gmail.com>
+ *
+ * https://github.com/jsanahuja/InstagramFeed
+ *
+ * We use jQuery to run the tests. It is not a library dependency!
+ *
+ *-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>QUnit Example</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <div style="display:none" id="instagram-feed1"></div>
+    <div style="display:none" id="instagram-feed2"></div>
+    <div style="display:none" id="instagram-feed3"></div>
+    <div style="display:none" id="instagram-feed4"></div>
+    <div style="display:none" id="instagram-feed5"></div>
+
+    <script src="../src/polyfills.js"></script>
+    <script src="../src/InstagramFeed.js"></script>
+    <script>
+        (function($){
+            $(window).on('load', function(){
+                QUnit.test("Test1", function( assert ) {
+                    var failed = false;
+                    try{
+                        var obj = new InstagramFeed({
+                            'username': 'instagram',
+                            'container': document.getElementById("instagram-feed1"),
+                            'display_profile': true,
+                            'display_biography': true,
+                            'display_gallery': true,
+                            'get_raw_json': false,
+                            'callback': null,
+                            'styling': true,
+                            'items': 8,
+                            'items_per_row': 4,
+                            'margin': 1
+                        });
+                        failed = !obj.valid;
+                    }catch(e){
+                        failed = true;
+                    }
+                    assert.ok(failed === false, "Passed Test1!");
+                });
+                QUnit.test("Test2", function( assert ) {
+                    var failed = false;
+                    try{
+                        var obj = new InstagramFeed({
+                            'username': 'github',
+                            'container': document.getElementById("instagram-feed2"),
+                            'display_profile': false,
+                            'display_biography': false,
+                            'display_gallery': true,
+                            'get_raw_json': false,
+                            'callback': null,
+                            'styling': true,
+                            'items': 8,
+                            'items_per_row': 4,
+                            'margin': 1
+                        });
+                        failed = !obj.valid;
+                    }catch(e){
+                        failed = true;
+                    }
+                    assert.ok(failed === false, "Passed Test2!");
+                });
+                
+                QUnit.test("Test3", function( assert ) {
+                    var failed = false;
+                    try{
+                        var obj = new InstagramFeed({
+                            'username': 'zara',
+                            'container': document.getElementById("instagram-feed3"),
+                            'display_profile': false,
+                            'display_biography': false,
+                            'display_gallery': true,
+                            'get_raw_json': false,
+                            'callback': null,
+                            'styling': true,
+                            'items': 12,
+                            'items_per_row': 6,
+                            'margin': 0.25
+                        });
+                        failed = !obj.valid;
+                    }catch(e){
+                        failed = true;
+                    }
+                    assert.ok(failed === false, "Passed Test3!");
+                });
+                
+                QUnit.test("Test4", function( assert ) {
+                    var failed = false;
+                    try{
+                        var obj = new InstagramFeed({
+                            'username': 'fcbarcelona',
+                            'container': document.getElementById("instagram-feed4"),
+                            'display_profile': false,
+                            'display_biography': false,
+                            'display_gallery': false,
+                            'display_igtv': true,
+                            'get_raw_json': false,
+                            'callback': null,
+                            'styling': true,
+                            'items': 8,
+                            'items_per_row': 4,
+                            'margin': 1
+                        });
+                        failed = !obj.valid;
+                    }catch(e){
+                        failed = true;
+                    }
+                    assert.ok(failed === false, "Passed Test4!");
+                });
+
+                QUnit.test("Test5", function( assert ) {
+                    var failed = false;
+                    try{
+                        var obj = new InstagramFeed({
+                            'username': 'travisci',
+                            'get_data': true,
+                            'callback': function(json){
+                                document.getElementById("instagram-feed5").innerHTML = json;
+                            }
+                        });
+                        failed = !obj.valid;
+                    }catch(e){
+                        failed = true;
+                    }
+                    assert.ok(failed === false, "Passed Test5!");
+                });
+                
+                QUnit.test("Test6", function( assert ) {
+                    var failed = false;
+                    try{
+                        var obj = new InstagramFeed({
+                            'tag': 'paradise',
+                            'container': document.getElementById("instagram-feed4"),
+                            'display_profile': true,
+                            'display_gallery': true,
+                            'items': 100,
+                            'items_per_row': 5,
+                            'margin': 0.5
+                        });
+                        failed = !obj.valid;
+                    }catch(e){
+                        failed = true;
+                    }
+                    assert.ok(failed === false, "Passed Test6!");
+                });
+                
+                QUnit.test("Test7", function( assert ) {
+                    var obj = new InstagramFeed({});
+                    assert.ok(obj.valid === false, "Passed Test7 (no username nor tag)!");
+                });
+
+                QUnit.test("Test8", function( assert ) {
+                    var obj = new InstagramFeed({
+                        "username": "travisci"
+                    });
+                    assert.ok(obj.valid === false, "Passed Test8! (no container)");
+                });
+
+                QUnit.test("Test9", function( assert ) {
+                    var obj = new InstagramFeed({
+                        "username": "travisci",
+                        "get_data": true
+                    });
+                    assert.ok(obj.valid === false, "Passed Test9! (no callback)");
+                });
+            });
+        })(jQuery);
+    </script>
+    </body>
+</html>
