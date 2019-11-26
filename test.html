@@ -8,8 +8,6 @@
  *
  * https://github.com/jsanahuja/InstagramFeed
  *
- * We use jQuery to run the tests. It is not a library dependency!
- *
  *-->
 <!DOCTYPE html>
 <html>
@@ -21,13 +19,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qunit/2.9.2/qunit.min.js"></script>
     <script src="https://sinonjs.org/releases/sinon-2.0.0.js"></script>
 	<script>
-		// There is no JS native xmlHttpRequest outside browsers.
 		window.XMLHttpRequest = XMLHttpRequest = sinon.useFakeXMLHttpRequest;
 	</script>
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="qunit"></div>
