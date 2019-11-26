@@ -19,6 +19,11 @@
     <title>QUnit Example</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
     <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script src="https://sinonjs.org/releases/sinon-2.0.0.js"></script>
+	<script>
+		// There is no JS native xmlHttpRequest outside browsers.
+		window.XMLHttpRequest = XMLHttpRequest = sinon.useFakeXMLHttpRequest;
+	</script>
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -38,7 +43,7 @@
     <script src="../src/InstagramFeed.js"></script>
     <script>
         (function($){
-            $(window).on('load', function(){
+            $(window).on('load', function(){				
                 QUnit.test("Test1", function( assert ) {
                     var failed = false;
                     try{
