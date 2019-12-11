@@ -18,11 +18,11 @@
      <meta name="viewport" content="width=device-width">
      <title>QUnit Example</title>
      <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
-     <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
      <script
          src="https://code.jquery.com/jquery-3.4.1.min.js"
          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
          crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
  </head>
  <body>
      <div id="qunit"></div>
@@ -41,7 +41,6 @@
              $(window).on('load', function(){
                  QUnit.test("Test1", function( assert ) {
                      var failed = false;
-                     var ex;
                      try{
                          var obj = new InstagramFeed({
                              'username': 'instagram',
@@ -58,10 +57,9 @@
                          });
                          failed = !obj.valid;
                      }catch(e){
-                         ex = e;
-                         failed = true;
+                         failed = e;
                      }
-                     assert.ok(failed === false, "Passed Test1!" + ex);
+                     assert.ok(failed === false, "Test1 : "+ failed);
                  });
                  QUnit.test("Test2", function( assert ) {
                      var failed = false;
@@ -81,9 +79,9 @@
                          });
                          failed = !obj.valid;
                      }catch(e){
-                         failed = true;
+                         failed = e;
                      }
-                     assert.ok(failed === false, "Passed Test2!");
+                     assert.ok(failed === false, "Test2 : " + failed);
                  });
                  
                  QUnit.test("Test3", function( assert ) {
@@ -104,9 +102,9 @@
                          });
                          failed = !obj.valid;
                      }catch(e){
-                         failed = true;
+                         failed = e;
                      }
-                     assert.ok(failed === false, "Passed Test3!");
+                     assert.ok(failed === false, "Test3 : " + failed);
                  });
                  
                  QUnit.test("Test4", function( assert ) {
@@ -128,9 +126,9 @@
                          });
                          failed = !obj.valid;
                      }catch(e){
-                         failed = true;
+                         failed = e;
                      }
-                     assert.ok(failed === false, "Passed Test4!");
+                     assert.ok(failed === false, "Test4 : " + failed);
                  });
  
                  QUnit.test("Test5", function( assert ) {
@@ -145,9 +143,9 @@
                          });
                          failed = !obj.valid;
                      }catch(e){
-                         failed = true;
+                         failed = e;
                      }
-                     assert.ok(failed === false, "Passed Test5!");
+                     assert.ok(failed === false, "Test5 : " + failed);
                  });
                  
                  QUnit.test("Test6", function( assert ) {
@@ -164,21 +162,21 @@
                          });
                          failed = !obj.valid;
                      }catch(e){
-                         failed = true;
+                         failed = e;
                      }
-                     assert.ok(failed === false, "Passed Test6!");
+                     assert.ok(failed === false, "Test6 : " + failed);
                  });
                  
                  QUnit.test("Test7", function( assert ) {
                      var obj = new InstagramFeed({});
-                     assert.ok(obj.valid === false, "Passed Test7 (no username nor tag)!");
+                     assert.ok(obj.valid === false, "Test7 : " + obj.valid === false);
                  });
  
                  QUnit.test("Test8", function( assert ) {
                      var obj = new InstagramFeed({
                          "username": "travisci"
                      });
-                     assert.ok(obj.valid === false, "Passed Test8! (no container)");
+                     assert.ok(obj.valid === false, "Test8 : "+ obj.valid === false);
                  });
  
                  QUnit.test("Test9", function( assert ) {
@@ -186,7 +184,7 @@
                          "username": "travisci",
                          "get_data": true
                      });
-                     assert.ok(obj.valid === false, "Passed Test9! (no callback)");
+                     assert.ok(obj.valid === false, "Test9 : "+ obj.valid === false);
                  });
              });
          })(jQuery);
