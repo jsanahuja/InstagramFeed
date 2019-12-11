@@ -8,7 +8,18 @@ module.exports = function(grunt) {
             }
         },
         qunit: {
-            files: ['test/index.html']
+            files: ['test/index.html'],
+			options: {
+				puppeteer: {
+					ignoreDefaultArgs: true,
+					args: [
+						"--headless",
+						"--disable-web-security",
+						"--allow-file-access-from-files"
+					]
+				},
+				timeout: 10000
+			},
         }
     });
     grunt.loadNpmTasks('grunt-contrib-qunit');
