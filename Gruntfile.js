@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             }
         },
         qunit: {
-            files: ['test.html']
+            files: ['test/index.html']
         }
     });
     grunt.loadNpmTasks('grunt-contrib-qunit');
