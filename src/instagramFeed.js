@@ -105,7 +105,7 @@ var InstagramFeed = (function(){
             var html = "";
             if(this.options.display_profile){
                 html += "<div class='instagram_profile'" +styles.profile_container +">";
-                html += "<img class='instagram_profile_image' src='"+ data.profile_pic_url +"' alt='"+ data.name +" profile pic'"+ styles.profile_image +" />";
+                html += "<img class='instagram_profile_image' src='"+ data.profile_pic_url +"' alt='"+ data.username +" profile pic'"+ styles.profile_image +" />";
                 if(this.is_tag)
                     html += "<p class='instagram_tag'"+ styles.profile_name +"><a href='https://www.instagram.com/explore/tags/"+ this.options.tag +"' rel='noopener' target='_blank'>#"+ this.options.tag +"</a></p>";
                 else
@@ -147,12 +147,13 @@ var InstagramFeed = (function(){
                                 image = imgs[i].node.thumbnail_resources[image_index].src;
                         }
 
+                        if (this.is_tag) data.username = '';
                         html += "<a href='" + url +"' class='instagram-" + type_resource + "' rel='noopener' target='_blank'>";
-                        html += "<img src='" + image + "' alt='" + data.name + " instagram image "+ i + "'" + styles.gallery_image +" />";
+                        html += "<img src='" + image + "' alt='" + data.username + " instagram image "+ i + "'" + styles.gallery_image +" />";
                         html += "</a>";
                     }
 
-                    html +=         "</div>";
+                    html += "</div>";
                 }
             }
             
