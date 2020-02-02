@@ -17,9 +17,11 @@
 
 <head>
 
+    <!-- InstagramFeed HAS NO DEPENDENCIES. You don't need any of those, it's just for documentation!! -->
+    <!-- InstagramFeed HAS NO DEPENDENCIES. You don't need any of those, it's just for documentation!! -->
+    <!-- InstagramFeed HAS NO DEPENDENCIES. You don't need any of those, it's just for documentation!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -28,10 +30,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
     <script src="https://www.sowecms.com/demos/statics/prism.js"></script>
     <link rel="stylesheet" type="text/css" href="https://www.sowecms.com/demos/statics/prism.css">
-
+    <!-- InstagramFeed HAS NO DEPENDENCIES. You don't need any of those, it's just for documentation!! -->
+    <!-- InstagramFeed HAS NO DEPENDENCIES. You don't need any of those, it's just for documentation!! -->
+    <!-- InstagramFeed HAS NO DEPENDENCIES. You don't need any of those, it's just for documentation!! -->
     <style>
         .bg-primary-2 {
             background-color: #3779B3;
@@ -272,14 +275,15 @@
                         </td>
                         <td><em>number [Int]</em></td>
                         <td><code>640</code></td>
-                        <td>Scale of items to build gallery. Accepted values [150, 240, 320, 480, 640]. Does not apply to video previews.</td>
+                        <td>Scale of items to build gallery. Accepted values [150, 240, 320, 480, 640]. Does not apply
+                            to video previews.</td>
                     </tr>
-                        <td class="d-flex flex-wrap">
-                            <code class="text-bold flex-grow-1">host</code>
-                        </td>
-                        <td><em>String [url]</em></td>
-                        <td><code>https://www.instagram.com/</code></td>
-                        <td>URL where to fetch the data. Useful if instagram changes CORS policy</td>
+                    <td class="d-flex flex-wrap">
+                        <code class="text-bold flex-grow-1">host</code>
+                    </td>
+                    <td><em>String [url]</em></td>
+                    <td><code>https://www.instagram.com/</code></td>
+                    <td>URL where to fetch the data. Useful if instagram changes CORS policy</td>
                     </tr>
                 </tbody>
             </table>
@@ -317,6 +321,10 @@
                     <li class="nav-item">
                         <a class="nav-link" id="example7-tab" href="#example7" role="tab" aria-controls="Example 7"
                             aria-selected="false" data-toggle="tab">Example 7</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="example8-tab" href="#example8" role="tab" aria-controls="Example 8"
+                            aria-selected="false" data-toggle="tab">Example 8</a>
                     </li>
                 </ul>
             </div>
@@ -525,6 +533,39 @@
             }</strong>
         });
     })();
+&lt;/script&gt;
+ </code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="example8" role="tabpanel" aria-labelledby="example8-tab">
+                    <h3>Example 8: AMD (Asynchronous module definition)</h3>
+                    <div class="section_code py-3">
+                        <div>Code:</div>
+                        <pre><code class="language-html">
+&lt;script&gt;
+    // Example for RequireJS
+    require.config({
+        paths:{
+            'InstagramFeed': '../dist/InstagramFeed.min',
+        }
+    });
+
+    require(["InstagramFeed"], function(InstagramFeed){
+        new InstagramFeed({
+            'username': 'instagram',
+            'container': document.getElementById("instagram-feed1"),
+            'display_profile': true,
+            'display_biography': true,
+            'display_gallery': true,
+            'get_raw_json': false,
+            'callback': null,
+            'styling': true,
+            'items': 8,
+            'items_per_row': 4,
+            'margin': 1
+        });
+    });
 &lt;/script&gt;
  </code></pre>
                     </div>
