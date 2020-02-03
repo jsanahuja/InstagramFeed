@@ -80,6 +80,21 @@ var InstagramFeed = (function(){
             xhr.send();
         };
 
+        this.parse_caption = function(igobj, data){
+            if(typeof igobj.node.edge_media_to_caption.edges[0] !== "undefined" && igobj.node.edge_media_to_caption.edges[0].node.text.length != 0){
+                return igobj.node.edge_media_to_caption.edges[0].node.text;
+            }
+            
+            if(typeof igobj.node.title !== "undefined" && igobj.node.title.length != 0){
+                return igobj.node.title;
+            }
+            
+            if(typeof igobj.node.accessibility_caption !== "undefined" && igobj.node.accessibility_caption.length != 0){
+                return igobj.node.accessibility_caption;
+            }
+            return (this.is_tag ? data.name : data.username) + " image ";
+        }
+
         this.display = function(data){
             // Styling
             if(this.options.styling){
@@ -105,7 +120,7 @@ var InstagramFeed = (function(){
             var html = "";
             if(this.options.display_profile){
                 html += "<div class='instagram_profile'" +styles.profile_container +">";
-                html += "<img class='instagram_profile_image' src='"+ data.profile_pic_url +"' alt='"+ data.username +" profile pic'"+ styles.profile_image +" />";
+                html += "<img class='instagram_profile_image' src='"+ data.profile_pic_url +"' alt='"+ (this.is_tag ? data.name + " tag pic" : data.username + " profile pic") +" profile pic'"+ styles.profile_image +" />";
                 if(this.is_tag)
                     html += "<p class='instagram_tag'"+ styles.profile_name +"><a href='https://www.instagram.com/explore/tags/"+ this.options.tag +"' rel='noopener' target='_blank'>#"+ this.options.tag +"</a></p>";
                 else
@@ -131,7 +146,8 @@ var InstagramFeed = (function(){
 
                     for(var i = 0; i < max; i++){
                         var url = "https://www.instagram.com/p/" + imgs[i].node.shortcode,
-                            image, type_resource;
+                            image, type_resource, 
+                            caption = this.parse_caption(imgs[i], data);
 
                         switch(imgs[i].node.__typename){
                             case "GraphSidecar":
@@ -148,8 +164,8 @@ var InstagramFeed = (function(){
                         }
 
                         if (this.is_tag) data.username = '';
-                        html += "<a href='" + url +"' class='instagram-" + type_resource + "' rel='noopener' target='_blank'>";
-                        html += "<img src='" + image + "' alt='" + data.username + " instagram image "+ i + "'" + styles.gallery_image +" />";
+                        html += "<a href='" + url +"' class='instagram-" + type_resource + "' title='" + caption +"' rel='noopener' target='_blank'>";
+                        html += "<img src='" + image + "' alt='" + caption + "'" + styles.gallery_image +" />";
                         html += "</a>";
                     }
 
@@ -164,8 +180,11 @@ var InstagramFeed = (function(){
                 if(igtv.length > 0){
                     html += "<div class='instagram_igtv'>";
                     for(var i = 0; i < max; i++){
-                        html += "<a href='https://www.instagram.com/p/"+ igtv[i].node.shortcode +"' rel='noopener' target='_blank'>";
-                        html += "<img src='"+ igtv[i].node.thumbnail_src +"' alt='"+ this.options.username +" instagram image "+ i+"'"+styles.gallery_image+" />";
+                        var url = "https://www.instagram.com/p/"+ igtv[i].node.shortcode,
+                            caption = this.parse_caption(igtv[i], data);
+
+                        html += "<a href='"+ url +"' rel='noopener' title='" + caption +"' target='_blank'>";
+                        html += "<img src='"+ igtv[i].node.thumbnail_src +"' alt='" + caption +"'"+styles.gallery_image+" />";
                         html += "</a>";
                     }
                     html += "</div>";
