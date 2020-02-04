@@ -1,38 +1,30 @@
 {
-  "name": "InstagramFeed",
-  "description": "Instagram Feed without access token. Not using the Instagram API",
-  "homepage": "https://github.com/jsanahuja/InstagramFeed",
-  "version": "1.1.0",
-  "keywords": [
-    "instagram",
-    "feed",
-    "InstagramFeed",
-    "without",
-    "access",
-    "token"
-  ],
-  "author": {
-    "name": "Javier Sanahuja",
-    "email": "bannss1@gmail.com"
-  },
-  "contributors": [
-    {
-      "name": "Cristian Sanahuja",
-      "email": "csanahuja@gmail.com"
+    "name": "@jsanahuja/instagramfeed",
+    "description": "Instagram Feed without access token. Not using the Instagram API",
+    "homepage": "https://github.com/jsanahuja/InstagramFeed",
+    "version": "1.1.0",
+    "keywords": ["instagram", "feed", "InstagramFeed", "without", "access", "token"],
+    "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+    "author": {
+        "name": "Javier Sanahuja",
+        "email": "bannss1@gmail.com"
+    },
+    "contributors": [{
+        "name": "Cristian Sanahuja",
+        "email": "csanahuja@gmail.com"
+    }],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jsanahuja/InstagramFeed.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "test": "grunt test",
+        "dist": "grunt dist"
+    },
+    "devDependencies": {
+        "grunt": "^1.0.4",
+        "grunt-contrib-qunit": "^3.1.0",
+        "grunt-node-minify": "^1.5.0"
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jsanahuja/InstagramFeed.git"
-  },
-  "license": "MIT",
-  "scripts": {
-    "test": "grunt test",
-    "dist": "grunt dist"
-  },
-  "devDependencies": {
-    "grunt": "^1.0.4",
-    "grunt-contrib-qunit": "^3.1.0",
-    "grunt-node-minify": "^1.5.0"
-  }
 }
