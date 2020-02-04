@@ -1,7 +1,7 @@
 <!--
  * InstagramFeed
  *
- * @version 1.0.0
+ * @version 1.2.0
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -19,8 +19,7 @@
     <meta name="viewport" content="width=device-width">
     <title>QUnit Test</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
 </head>
 
@@ -37,9 +36,9 @@
     <script src="../src/polyfills.js"></script>
     <script src="../src/InstagramFeed.js"></script>
     <script>
-        (function ($) {
-            $(window).on('load', function () {
-                QUnit.test("Test1", function (assert) {
+        (function($) {
+            $(window).on('load', function() {
+                QUnit.test("Test1", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -61,7 +60,7 @@
                     }
                     assert.ok(failed === false, "Test1 : " + failed);
                 });
-                QUnit.test("Test2", function (assert) {
+                QUnit.test("Test2", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -84,7 +83,7 @@
                     assert.ok(failed === false, "Test2 : " + failed);
                 });
 
-                QUnit.test("Test3", function (assert) {
+                QUnit.test("Test3", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -107,7 +106,7 @@
                     assert.ok(failed === false, "Test3 : " + failed);
                 });
 
-                QUnit.test("Test4", function (assert) {
+                QUnit.test("Test4", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -131,13 +130,13 @@
                     assert.ok(failed === false, "Test4 : " + failed);
                 });
 
-                QUnit.test("Test5", function (assert) {
+                QUnit.test("Test5", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
                             'username': 'travisci',
                             'get_data': true,
-                            'callback': function (json) {
+                            'callback': function(json) {
                                 document.getElementById("instagram-feed5").innerHTML = json;
                             }
                         });
@@ -148,7 +147,7 @@
                     assert.ok(failed === false, "Test5 : " + failed);
                 });
 
-                QUnit.test("Test6", function (assert) {
+                QUnit.test("Test6", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -167,19 +166,19 @@
                     assert.ok(failed === false, "Test6 : " + failed);
                 });
 
-                QUnit.test("Test7", function (assert) {
+                QUnit.test("Test7", function(assert) {
                     var obj = new InstagramFeed({});
                     assert.ok(obj.valid === false, "Test7 : " + obj.valid === false);
                 });
 
-                QUnit.test("Test8", function (assert) {
+                QUnit.test("Test8", function(assert) {
                     var obj = new InstagramFeed({
                         "username": "travisci"
                     });
                     assert.ok(obj.valid === false, "Test8 : " + obj.valid === false);
                 });
 
-                QUnit.test("Test9", function (assert) {
+                QUnit.test("Test9", function(assert) {
                     var obj = new InstagramFeed({
                         "username": "travisci",
                         "get_data": true

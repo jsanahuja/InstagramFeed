@@ -1,7 +1,7 @@
 <!--
  * InstagramFeed
  *
- * @version 1.0.0
+ * @version 1.2.0
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -11,16 +11,17 @@
  * We use jQuery to run the tests. It is not a library dependency!
  *
  *-->
- <!DOCTYPE html>
- <html>
- 
- <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width">
-     <title>RequireJS QUnit Test</title>
-     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
- </head>
- <body>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>RequireJS QUnit Test</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+</head>
+
+<body>
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
 
@@ -31,13 +32,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script>
         require.config({
-            paths:{
+            paths: {
                 'InstagramFeed': '../dist/InstagramFeed.min',
             }
         });
 
-        require(["InstagramFeed"], function(InstagramFeed){
-            QUnit.test("Test1", function (assert) {
+        require(["InstagramFeed"], function(InstagramFeed) {
+            QUnit.test("Test1", function(assert) {
                 var failed = false;
                 try {
                     var obj = new InstagramFeed({
@@ -60,7 +61,7 @@
                 assert.ok(failed === false, "Test1 : " + failed);
             });
         });
-    
     </script>
- </body>
+</body>
+
 </html>
