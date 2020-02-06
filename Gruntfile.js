@@ -1,7 +1,12 @@
 module.exports = function(grunt) {
     grunt.initConfig({
-        'node-minify': {
-            gcc: {
+        babel: {
+            options: {
+                sourceMap: false,
+                comments: false,
+                presets: ['@babel/preset-env', 'minify']
+            },
+            dist: {
                 files: {
                     'dist/InstagramFeed.min.js': ['src/*.js']
                 }
@@ -9,22 +14,18 @@ module.exports = function(grunt) {
         },
         qunit: {
             files: ['test/index.html'],
-			options: {
-				puppeteer: {
-					ignoreDefaultArgs: true,
-					args: [
-						"--headless",
-						"--disable-web-security",
-						"--allow-file-access-from-files"
-					]
-				},
-				timeout: 10000
-			},
+            options: {
+                puppeteer: {
+                    ignoreDefaultArgs: true,
+                    args: ['--headless', '--disable-web-security', '--allow-file-access-from-files']
+                },
+                timeout: 10000
+            }
         }
     });
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.registerTask('test', 'qunit');
 
-    grunt.loadNpmTasks('grunt-node-minify');
-    grunt.registerTask('dist', 'node-minify');
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.registerTask('build', ['babel']);
 };
