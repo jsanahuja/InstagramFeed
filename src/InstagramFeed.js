@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.3.0
+ * @version 1.3.1
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -17,7 +17,7 @@
     } else {
         root.InstagramFeed = factory();
     }
-}(this, function() {
+}((this || window), function() {
     var defaults = {
         'host': "https://www.instagram.com/",
         'username': '',
@@ -215,5 +215,4 @@
             this.run();
         }
     };
-
 }));
