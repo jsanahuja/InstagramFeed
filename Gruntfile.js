@@ -4,6 +4,7 @@ module.exports = function(grunt) {
             options: {
                 sourceMap: false,
                 comments: false,
+                sourceType: "unambiguous",
                 presets: ['@babel/preset-env', 'minify']
             },
             dist: {

@@ -17,7 +17,7 @@
     } else {
         root.InstagramFeed = factory();
     }
-}((this || window), function() {
+}(this, function() {
     var defaults = {
         'host': "https://www.instagram.com/",
         'username': '',
