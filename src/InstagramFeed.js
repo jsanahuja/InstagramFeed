@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.3.2
+ * @version 1.3.3
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -43,6 +43,22 @@
         "480": 3,
         "640": 4
     };
+
+    var escape_map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#x2F;',
+        '`': '&#x60;',
+        '=': '&#x3D;'
+    };
+    function escape_string(str){
+        return str.replace(/[&<>"'`=\/]/g, function (char) {
+            return escape_map[char];
+        });
+    }
 
     return function(opts) {
         this.options = Object.assign({}, defaults);
@@ -155,7 +171,7 @@
                     for (var i = 0; i < max; i++) {
                         var url = "https://www.instagram.com/p/" + imgs[i].node.shortcode,
                             image, type_resource,
-                            caption = this.parse_caption(imgs[i], data);
+                            caption = escape_string(this.parse_caption(imgs[i], data));
 
                         switch (imgs[i].node.__typename) {
                             case "GraphSidecar":
