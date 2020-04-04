@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.3.4
+ * @version 1.3.5
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -87,14 +87,13 @@
                     if (xhr.status === 200) {
                         var data = xhr.responseText.split("window._sharedData = ")[1].split("<\/script>")[0];
                         data = JSON.parse(data.substr(0, data.length - 1));
-                        data = data.entry_data.ProfilePage || data.entry_data.TagPage || null;
-                        if (data === null) {
-                            console.log(url);
-                            console.error("InstagramFeed: Request error. No data retrieved: " + xhr.statusText);
-                        } else {
-                            data = data[0].graphql.user || data[0].graphql.hashtag;
-                            callback(data, _this);
+                        data = data.entry_data.ProfilePage || data.entry_data.TagPage;
+                        if(typeof data === "undefined"){
+                            console.error("Instagram Feed: It looks like YOUR network has been temporary banned because of too many requests. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25");
+                            return;
                         }
+                        data = data[0].graphql.user || data[0].graphql.hashtag;
+                        callback(data, _this);
                     } else {
                         console.error("InstagramFeed: Request error. Response: " + xhr.statusText);
                     }
