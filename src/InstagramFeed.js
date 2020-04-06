@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.3.5
+ * @version 1.3.6
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -78,7 +78,7 @@
         }
 
         this.get = function(callback) {
-            var url = this.is_tag ? this.options.host + "explore/tags/" + this.options.tag : this.options.host + this.options.username,
+            var url = this.is_tag ? this.options.host + "explore/tags/" + this.options.tag + "/" : this.options.host + this.options.username + "/",
                 xhr = new XMLHttpRequest();
 
             var _this = this;
