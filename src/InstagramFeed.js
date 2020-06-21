@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.3.7
+ * @version 1.3.8
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
