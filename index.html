@@ -251,6 +251,14 @@
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
+                            <code class="text-bold flex-grow-1">lazy_load</code>
+                        </td>
+                        <td><em>Boolean</em></td>
+                        <td><code>false</code></td>
+                        <td>Enable lazy load of images using native web attribute loading="lazy" on img elements</td>
+                    </tr>
+                    <tr>
+                        <td class="d-flex flex-wrap">
                             <code class="text-bold flex-grow-1">margin</code>
                         </td>
                         <td><em>number [Float]</em></td>
@@ -330,7 +338,8 @@
             'styling': true,
             'items': 8,
             'items_per_row': 4,
-            'margin': 1 
+            'margin': 1,
+            'lazy_load': true
         });
     })();
 &lt;/script&gt;
@@ -581,7 +590,8 @@
                 'styling': true,
                 'items': 8,
                 'items_per_row': 4,
-                'margin': 1
+                'margin': 1,
+                'lazy_load': true
             });
 
             new InstagramFeed({
