@@ -1,16 +1,3 @@
-<!--
- * InstagramFeed
- *
- * @version 1.3.7
- *
- * @author Javier Sanahuja Liebana <bannss1@gmail.com>
- * @contributor csanahuja <csanahuja@gmail.com>
- *
- * https://github.com/jsanahuja/InstagramFeed
- *
- * We use jQuery to run the tests. It is not a library dependency!
- *
- *-->
 <!DOCTYPE html>
 <html>
 
@@ -33,7 +20,6 @@
     <div style="display:none" id="instagram-feed4"></div>
     <div style="display:none" id="instagram-feed5"></div>
 
-    <script src="../src/polyfills.js"></script>
     <script src="../src/InstagramFeed.js"></script>
     <script>
         (function($) {
@@ -135,7 +121,6 @@
                     try {
                         var obj = new InstagramFeed({
                             'username': 'travisci',
-                            'get_data': true,
                             'callback': function(json) {
                                 document.getElementById("instagram-feed5").innerHTML = json;
                             }
@@ -176,14 +161,6 @@
                         "username": "travisci"
                     });
                     assert.ok(obj.valid === false, "Test8 : " + obj.valid === false);
-                });
-
-                QUnit.test("Test9", function(assert) {
-                    var obj = new InstagramFeed({
-                        "username": "travisci",
-                        "get_data": true
-                    });
-                    assert.ok(obj.valid === false, "Test9 : " + obj.valid === false);
                 });
             });
         })(jQuery);

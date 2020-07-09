@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.3.8
+ * @version 1.4.0
  *
  * @author Javier Sanahuja Liebana <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja@gmail.com>
@@ -27,14 +27,14 @@
         'display_biography': true,
         'display_gallery': true,
         'display_igtv': false,
-        'get_data': false,
         'callback': null,
         'styling': true,
         'items': 8,
         'items_per_row': 4,
         'margin': 0.5,
         'image_size': 640,
-        'lazy_load': false
+        'lazy_load': false,
+        'on_error': console.error
     };
 
     var image_sizes = {
@@ -68,13 +68,14 @@
 
         this.valid = true;
         if (this.options.username == "" && this.options.tag == "") {
-            console.error("InstagramFeed: Error, no username or tag defined.");
+            this.options.on_error("InstagramFeed: Error, no username or tag defined.", 1);
             this.valid = false;
-        } else if (!this.options.get_data && this.options.container == "") {
-            console.error("InstagramFeed: Error, no container found.");
-            this.valid = false;
-        } else if (this.options.get_data && typeof this.options.callback != "function") {
-            console.error("InstagramFeed: Error, invalid or undefined callback for get_data");
+        }
+        if (typeof this.options.get_data !== "undefined") {
+            console.warn("InstagramFeed: options.get_data is deprecated, options.callback is always called if defined");
+        }
+        if (this.options.callback == null && this.options.container == "") {
+            this.options.on_error("InstagramFeed: Error, neither container found nor callback defined.", 2);
             this.valid = false;
         }
 
@@ -89,19 +90,19 @@
                         try{
                             var data = xhr.responseText.split("window._sharedData = ")[1].split("<\/script>")[0];
                         }catch(error){
-                            console.error("Instagram Feed: It looks like the profile you are trying to fetch is age restricted. See https://github.com/jsanahuja/InstagramFeed/issues/26");
+                            _this.options.on_error("InstagramFeed: It looks like the profile you are trying to fetch is age restricted. See https://github.com/jsanahuja/InstagramFeed/issues/26", 3);
                             return;
                         }
                         data = JSON.parse(data.substr(0, data.length - 1));
                         data = data.entry_data.ProfilePage || data.entry_data.TagPage;
                         if(typeof data === "undefined"){
-                            console.error("Instagram Feed: It looks like YOUR network has been temporary banned because of too many requests. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25");
+                            _this.options.on_error("InstagramFeed: It looks like YOUR network has been temporary banned because of too many requests. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25", 4);
                             return;
                         }
                         data = data[0].graphql.user || data[0].graphql.hashtag;
                         callback(data, _this);
                     } else {
-                        console.error("InstagramFeed: Request error. Response: " + xhr.statusText);
+                        _this.options.on_error("InstagramFeed: Unable to fetch the given user/tag. Instagram responded with the status code: " + xhr.statusText, 5);
                     }
                 }
             };
@@ -238,10 +239,12 @@
 
         this.run = function() {
             this.get(function(data, instance) {
-                if (instance.options.get_data)
-                    instance.options.callback(data);
-                else
+                if(instance.options.container != ""){
                     instance.display(data);
+                }
+                if(typeof instance.options.callback === "function"){
+                    instance.options.callback(data);
+                }
             });
         };
 
