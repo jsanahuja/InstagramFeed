@@ -523,7 +523,7 @@
         new InstagramFeed({
             'username': 'instagram',
             'callback': function(data){
-                $('#jsonHere').html(JSON.stringify(data, null, 2));
+                document.getElementById("jsonHere").innerHTML = JSON.stringify(data, null, 2);
             }
         });
     })();
