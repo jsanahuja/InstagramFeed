@@ -148,40 +148,39 @@
                     'profile_image': " style='border-radius:10em;width:15%;max-width:125px;min-width:50px;'",
                     'profile_name': " style='font-size:1.2em;'",
                     'profile_biography': " style='font-size:1em;'",
-                    'gallery_image': " style='width:100%;'"
+                    'gallery_image': " style='width:100%;'",
+                    'gallery_image_link': " style='width:" + width + "%; margin:" + this.options.margin + "%; position:relative; display: inline-flex; height: 100%;'"
                 };
+                // Caption Styling
+                var html = `<style>       
+                a[data-caption]:hover::after {
+                    content: attr(data-caption);
+                    text-align: center;
+                    font-size: 0.8rem;
+                    color: black;
+                    position: absolute;
+                    bottom: 0;
+                    padding: 1%;
+                    max-height: 100%;
+                    max-width: 100%;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    background-color: hsla(0, 100%, 100%, 0.8);
+                } 
+            </style>`;
             } else {
+                var html ="";
                 var styles = {
                     'profile_container': "",
                     'profile_image': "",
                     'profile_name': "",
                     'profile_biography': "",
-                    'gallery_image': ""
+                    'gallery_image': "",
+                    'gallery_image_link': ""
                 };
             }
 
             // Profile
-            var html = `<style> 
-             .instagram_gallery a, .instagram_igtv a {
-                position: relative;
-                display: inline-flex;
-                height: 100%;
-            }                     
-            a[data-caption]:hover::after {
-                content: attr(data-caption);
-                text-align: center;
-                font-size: 0.8rem;
-                color: black;
-                position: absolute;
-                bottom: 0;
-                padding: 1%;
-                max-height: 100%;
-                max-width: 100%;
-                overflow-y: auto;
-                overflow-x: hidden;
-                background-color: hsla(0, 100%, 100%, 0.8);
-            } 
-        </style>`;
             if (this.options.display_profile) {
                 html += "<div class='instagram_profile'" + styles.profile_container + ">";
                 html += "<img class='instagram_profile_image'" + (this.options.lazy_load ? " loading='lazy'" : '')  + " src='" + data.profile_pic_url + "' alt='" + (this.is_tag ? data.name + " tag pic" : data.username + " profile pic") + " profile pic'" + styles.profile_image + " />";
@@ -227,7 +226,7 @@
                         }
 
                         if (this.is_tag) data.username = '';
-                        html += "<a href='" + url + (this.options.display_captions? "' data-caption='" + caption : "") + "' style = 'width:" + width + "%; margin:" + this.options.margin + "%;" + "' class='instagram-" + type_resource + "' rel='noopener' target='_blank'>";
+                        html += "<a href='" + url + (this.options.display_captions? "' data-caption='" + caption : "") + "' class='instagram-" + type_resource + "' rel='noopener' target='_blank'" + styles.gallery_image_link + ">";
                         html += "<img" + (this.options.lazy_load ? " loading='lazy'" : '')  + " src='" + image + "' alt='" + caption + "'" + styles.gallery_image + " />";
                         html += "</a>";
                     }
@@ -246,7 +245,7 @@
                         var url = "https://www.instagram.com/p/" + igtv[i].node.shortcode,
                             caption = this.parse_caption(igtv[i], data);
 
-                        html += "<a href='" + url + "' style = 'width:" + width + "%; margin:" + this.options.margin + "%;" + (this.options.display_captions? "' data-caption='" + caption : "") + "' rel='noopener' target='_blank'>";
+                        html += "<a href='" + url + (this.options.display_captions? "' data-caption='" + caption : "") + "' rel='noopener' target='_blank'" + styles.gallery_image_link + ">";
                         html += "<img" + (this.options.lazy_load ? " loading='lazy'" : '')  + " src='" + igtv[i].node.thumbnail_src + "' alt='" + caption + "'" + styles.gallery_image + " />";
                         html += "</a>";
                     }
