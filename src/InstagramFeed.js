@@ -141,9 +141,11 @@
 
         this.display = function(data) {
             // Styling
+            var html = "",
+                styles;
             if (this.options.styling) {
                 var width = (100 - this.options.margin * 2 * this.options.items_per_row) / this.options.items_per_row;
-                var styles = {
+                styles = {
                     'profile_container': " style='text-align:center;'",
                     'profile_image': " style='border-radius:10em;width:15%;max-width:125px;min-width:50px;'",
                     'profile_name': " style='font-size:1.2em;'",
@@ -152,25 +154,26 @@
                     'gallery_image_link': " style='width:" + width + "%; margin:" + this.options.margin + "%; position:relative; display: inline-flex; height: 100%;'"
                 };
                 // Caption Styling
-                var html = `<style>       
-                a[data-caption]:hover::after {
-                    content: attr(data-caption);
-                    text-align: center;
-                    font-size: 0.8rem;
-                    color: black;
-                    position: absolute;
-                    bottom: 0;
-                    padding: 1%;
-                    max-height: 100%;
-                    max-width: 100%;
-                    overflow-y: auto;
-                    overflow-x: hidden;
-                    background-color: hsla(0, 100%, 100%, 0.8);
-                } 
-            </style>`;
+                if(this.options.display_captions){
+                    html += "<style>\
+                        a[data-caption]:hover::after {\
+                            content: attr(data-caption);\
+                            text-align: center;\
+                            font-size: 0.8rem;\
+                            color: black;\
+                            position: absolute;\
+                            bottom: 0;\
+                            padding: 1%;\
+                            max-height: 100%;\
+                            width: 100%;\
+                            overflow-y: auto;\
+                            overflow-x: hidden;\
+                            background-color: hsla(0, 100%, 100%, 0.8);\
+                        }\
+                    </style>";
+                }
             } else {
-                var html ="";
-                var styles = {
+                styles = {
                     'profile_container': "",
                     'profile_image': "",
                     'profile_name': "",
