@@ -26,7 +26,7 @@
         'display_profile': true,
         'display_biography': true,
         'display_gallery': true,
-        'display_captions': true,
+        'display_captions': false,
         'display_igtv': false,
         'callback': null,
         'styling': true,
