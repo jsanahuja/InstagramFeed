@@ -246,7 +246,7 @@
                     html += "<div class='instagram_igtv'>";
                     for (var i = 0; i < max; i++) {
                         var url = "https://www.instagram.com/p/" + igtv[i].node.shortcode,
-                            caption = this.parse_caption(igtv[i], data);
+                            caption = escape_string(this.parse_caption(igtv[i], data));
 
                         html += "<a href='" + url + (this.options.display_captions? "' data-caption='" + caption : "") + "' rel='noopener' target='_blank'" + styles.gallery_image_link + ">";
                         html += "<img" + (this.options.lazy_load ? " loading='lazy'" : '')  + " src='" + igtv[i].node.thumbnail_src + "' alt='" + caption + "'" + styles.gallery_image + " />";
