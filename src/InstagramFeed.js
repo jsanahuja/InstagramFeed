@@ -3,8 +3,8 @@
  *
  * @version 1.4.0
  *
- * @author Javier Sanahuja Liebana <bannss1@gmail.com>
- * @contributor csanahuja <csanahuja@gmail.com>
+ * @author jsanahuja <bannss1@gmail.com>
+ * @contributor csanahuja <csanahuja10@gmail.com>
  *
  * https://github.com/jsanahuja/InstagramFeed
  *
