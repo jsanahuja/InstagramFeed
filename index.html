@@ -295,6 +295,47 @@
                             <p class="mb-0"><span class="text-danger text-small text-italic">5</span>: Request error</p>
                         </td>
                     </tr>
+                    <tr>
+                      <td class="d-flex flex-wrap">
+                          <code class="text-bold flex-grow-1">cache_use</code>
+                      </td>
+                      <td><em>Boolean</em></td>
+                      <td><code>false</code></td>
+                      <td>
+                        Set this to <code>true</code> to reduce the possibility that you'll get hit with <a href="#error-four">error code #4</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="d-flex flex-wrap">
+                          <code class="text-bold flex-grow-1">cache_for</code>
+                      </td>
+                      <td><em>String</em></td>
+                      <td><code>30:min</code></td>
+                      <td>
+                        <p class="mb-1">Results are cached until this amount of time has passed. This is a <code>"number:period"</code> specifier, where period can be any of: <code>{min|minute|minutes|mon|month|months|hour|hours}</code>.</p>
+                        <p class="mb-0">Here are some examples:</p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">3:min</span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">3:minutes</span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">3:minute<sup>*</sup></span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">1:month</span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">3:months</span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">3:mon</span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">1:hour</span></p>
+                        <p class="mb-0 ml-3"><span class="text-secondary text-small text-italic">3:hours</span></p>
+                        <p class="mb-0"><span class="text-secondary text-small"><sup>*</sup>The time period parser doesn’t care if you‘ve mixed up the plurality for the period portion of your time specifier; 1:minutes == 1:minute == 1:min.</span></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="d-flex flex-wrap">
+                          <code class="text-bold flex-grow-1">cache_prefix</code>
+                      </td>
+                      <td><em>String</em></td>
+                      <td><code>igf_</code></td>
+                      <td>
+                        <p>A <code>window.localStorage</code> key prefix that is used to compartmentalize cache keys set by <code>InstagramFeed</code>.</p>
+                        <p>You don‘t need to change this unless you‘re getting a window.localStorage key collision with the default; igf_</p>
+                      </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -356,7 +397,10 @@
             'items_per_row': 4,
             'margin': 1,
             'lazy_load': true,
-            'on_error': console.error
+            'on_error': console.error,
+            'cache_use': true, // default is false
+            'cache_for': '33:min', // users browser will take a fresh pull after 33 minutes have passed
+            'cache_prefix': 'igf_', // the default
         });
     })();
 &lt;/script&gt;
