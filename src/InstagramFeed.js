@@ -109,7 +109,188 @@
             };
             xhr.open("GET", url, true);
             xhr.send();
-        };
+      };
+
+      /**
+       * Get an expiration timestamp based on a future time specifier
+       * @param { string } on an expiration specifier. A specifier is a {number}, followed by a ":", followed 
+       *                      by one of {min|minute|minutes|mon|month|months|hour|hours}. 
+       * @examples some valid specifiers:
+       *    1:min
+       *    10:minutes
+       *    1:months
+       *    10:mon
+       *    1:hour
+       *    10:hours
+       */
+      this.cache_expire = function(on){
+              // a base date for the cache expiration
+          var start = new Date(),
+              // a default date for the cache expiration
+              expire = new Date(start),
+              // the colon delimited future time period specifier
+              parts = on.split(':'),
+              // a default unit in case we get passed a bad specifier
+              units = 1;
+          // if parts parsed out into two parts
+          if(parts.length > 1){
+            units = parseInt(parts[0],10);
+            type = parts[1];
+            switch (type) {
+              // add some number of minutes to the base time
+              case 'min':
+              case 'minute':
+              case 'minutes':
+                expire.setMinutes(start.getMinutes() + units);
+              break;                
+              // add some number of months to the base time
+              case 'mon':
+              case 'month':
+              case 'months':
+                expire.setMonth(start.getMonth() + units);
+              break;
+              // adding some number of hours to the base time is the default
+              case 'hour':
+              case 'hours':
+              default:
+                expire.setHours(start.getHours() + units);
+              break;
+            }
+          }
+          // get the expiration time as unix; if we were passed a bad time specifier this will be 1 minute from "now"
+          var expires = expire.getTime();
+          return expires;
+      }
+
+      /**
+       * Gets keys that match options.cache_prefix
+       * @source: https://stackoverflow.com/a/17748203/12894421
+       */
+      this.cache_keys = function(store){
+              // default value for keys that match options.cache_prefix
+          var keys = [],
+              // get a list of all the keys available in localStorage
+              list = Object.keys(store),
+              // get the length of the list of keys
+              length = list.length,
+              // create a regex that can match the configured prefix against each of the keys in localstorage
+              has = new RegExp('/^'+prefix+'/');
+
+          // while the length of the list counter is above 0, post incremented
+          while ( length-- ) {
+            // get the key from the list at the given index
+            var check = list[length];
+            // does this key begin with our cache prefix?
+            if(check.match(has)){
+              // push the key into our list of keys that we'll remove from window.localStorage
+              keys.push(check);
+            }
+          }
+          return keys;
+      }
+
+      /**
+       * Get, set, remove, or clear data to/from window.localStorage. Data is returned from cache until you've cleared 
+       * the key or the key has expired. Keys expire based on the time period set in options.cache_for
+       * @param { string | null } key a cache key to get or set; or null if you want to clear all items in the store that match options.prefix
+       * @param { any | undefined } value a value to set; undefined if you're doing a get; or a string flag, REMOVE, to remove a given cache key
+       * @returns { any | null } your cached value will be returned if (you're doing a get operation && the key exists in window.localStorage && the data hasn't expired); otherwise null
+       * @examples
+       *    * Set a value into the cache:
+       *      this.cache('some-key',{an:'object'});
+       *    * Get a value from the cache:
+       *      value = this.cache('some-key');
+       *      => value == {an:'object'}
+       *    * Remove an item from the cache:
+       *      this.cache('some-key','REMOVE');
+       *      value = this.cache('some-key');
+       *      => value == null
+       *    * Clear all keys from the cache that match options.cache_prefix
+       *      this.cache(null);
+       *      => all non-InstagramFeed localStorage keys left intact, all values matching options.cache_prefix removed
+       */
+      this.cache = function(key,value){
+          var _this = this,
+              data = null,
+              prefix = _this.options.cache_prefix,
+              expires = _this.options.cache_for,
+              InstaStore = window.localStorage;
+          if(InstaStore){
+            // if a non null key (our clear cache flag) got passed in then auto prepend the configured keystore prefix to the key
+            if(key !== null){
+              key = prefix + key;
+            }
+            // perform the requested cache operation based on the incoming key and value
+            switch (value) {
+              // the special flag 'REMOVE' was passed in with with a key that is a string
+              case 'REMOVE':
+                if(typeof key === "string"){
+                  InstaStore.removeItem(key);
+                }
+              break;
+
+              default:
+                // null was sent in as the key; clear all window.localStorage keys that match the options.cache_prefix
+                if(key === null){
+                  var keys = _this.cache_keys(InstaStore);
+                  // if we have matching cache keys then pass each of them back into this.cache() with the REMOVE flag set
+                  if(keys.length > 0){
+                    // iterate over our list of matching keys, removing each one that matched our prefix
+                    keys.forEach(function(item){
+                      // remove the prefix so it doesn't double up on the way back into this.cache
+                      item = item.replace(prefix,'');
+                      // pass the 
+                      _this.cache(item,'REMOVE');
+                    });
+                  }
+                // set the item into local storage if a GET or REMOVE wasn't requested
+                } else if (value || value === false){
+                  // get the expiration date for this cache entry
+                  var expiration = _this.cache_expire(expires);
+                  // wrap the real value in an object that containss the value (v) and metadata (m) about the value
+                  var store = {
+                    // the real value that we're storing
+                    v: value,
+                    // the metadata for the value
+                    m: {
+                      // when the data was stored as a unix timestamp
+                      on: Date.now(),
+                      // when the value expires as a unix timestamp
+                      e: expiration,
+                    }
+                  }
+                  // stringify the wrapped value so we can stuff it into local storage
+                  store = JSON.stringify(store);
+                  try {
+                    InstaStore.setItem(key,store);
+                  } catch (error) {
+                    // compose an error message about the failure to cache the requested data
+                    var message = [
+                      "InstagramFeed: Unable to cache the instagram feed for:",
+                      this.url(),
+                      'because a window.localStorage storage exception occurred:',
+                      error.toString()
+                    ].join(' ');
+                    _this.options.on_error(message);
+                  }
+                // get the item out of local storage by its key
+                } else {
+                  data = InstaStore.getItem(key);
+                  // if a non null value was stored then the key was found
+                  if(data !== null){
+                    // unpack the wrapped data
+                    data = JSON.parse(data);
+                    var on = data.m.e,
+                        now = Date.now();
+                    // if the current time is less than the expiration time then return the unwrapped data.value, if expired then lie and return null
+                    data = (now < on) ? data.v : null;
+                  }
+                }
+              break;
+            }
+          }
+          return data;
+      };
 
         this.parse_caption = function(igobj, data) {
             if (
