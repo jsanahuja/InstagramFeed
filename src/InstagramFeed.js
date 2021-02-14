@@ -87,35 +87,56 @@
             this.valid = false;
         }
 
-        this.get = function(callback) {
-            var url = this.is_tag ? this.options.host + "explore/tags/" + this.options.tag + "/" : this.options.host + this.options.username + "/",
-                xhr = new XMLHttpRequest();
+      /**
+       * Composes the xhr url based on if this pull was based on a username or a tag. this is used to both pull data from 
+       * instagram and show the url that couldn’t be cached if a window.localStorage error occurred when trying to stuff 
+       * data into the cache
+       */
+      this.url = function(){
+          return this.is_tag ? this.options.host + "explore/tags/" + this.options.tag + "/" : this.options.host + this.options.username + "/";
+      }
 
-            var _this = this;
+      this.get = function(callback) {
+          var url = this.url(),
+              xhr = new XMLHttpRequest();
+
+          var _this = this;
+          var key = (_this.is_tag) ? 't-'+_this.options.tag : 'u-'+_this.options.username,
+          // do we have a cached version of the data pull available in local storage?
+          data = _this.cache(key);
+          // we have cached data, pass it to the callback
+          if(data !== null){
+            callback(data, _this);
+          }
+          // no data cached; get the data, parse and cache the result, then execute the callback when complete
+          else {
             xhr.onload = function(e) {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        try{
-                            var data = xhr.responseText.split("window._sharedData = ")[1].split("<\/script>")[0];
-                        }catch(error){
-                            _this.options.on_error("InstagramFeed: It looks like the profile you are trying to fetch is age restricted. See https://github.com/jsanahuja/InstagramFeed/issues/26", 3);
-                            return;
-                        }
-                        data = JSON.parse(data.substr(0, data.length - 1));
-                        data = data.entry_data.ProfilePage || data.entry_data.TagPage;
-                        if(typeof data === "undefined"){
-                            _this.options.on_error("InstagramFeed: It looks like YOUR network has been temporary banned because of too many requests. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25", 4);
-                            return;
-                        }
-                        data = data[0].graphql.user || data[0].graphql.hashtag;
-                        callback(data, _this);
-                    } else {
-                        _this.options.on_error("InstagramFeed: Unable to fetch the given user/tag. Instagram responded with the status code: " + xhr.statusText, 5);
-                    }
-                }
+              if (xhr.readyState === 4) {
+                  if (xhr.status === 200) {
+                      try{
+                        data = xhr.responseText.split("window._sharedData = ")[1].split("<\/script>")[0];
+                      }catch(error){
+                          _this.options.on_error("InstagramFeed: It looks like the profile you are trying to fetch is age restricted. See https://github.com/jsanahuja/InstagramFeed/issues/26", 3);
+                          return;
+                      }
+                      data = JSON.parse(data.substr(0, data.length - 1));
+                      data = data.entry_data.ProfilePage || data.entry_data.TagPage;
+                      if(typeof data === "undefined"){
+                          _this.options.on_error("InstagramFeed: It looks like YOUR network has been temporary banned because of too many requests. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25", 4);
+                          return;
+                      }
+                      data = data[0].graphql.user || data[0].graphql.hashtag;
+                      _this.cache(key,data);
+                      callback(data, _this);
+                  } else {
+                      _this.options.on_error("InstagramFeed: Unable to fetch the given user/tag. Instagram responded with the status code: " + xhr.statusText, 5);
+                  }
+              }
             };
             xhr.open("GET", url, true);
             xhr.send();
+          }
+
       };
 
       /**
