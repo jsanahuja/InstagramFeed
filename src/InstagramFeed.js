@@ -41,8 +41,6 @@
         // cache entries will be returned from the cache until this amount of time has passed.
         'cache_for': '30:min',
         // set this to true to turn on internal localStorage caching, reducing the possibility that 
-      // set this to true to turn on internal localStorage caching, reducing the possibility that 
-        // set this to true to turn on internal localStorage caching, reducing the possibility that 
         // you’ll hit issue #25 / error #4: https://github.com/jsanahuja/jquery.instagramFeed/issues/25
         'cache_use': false,
     };
