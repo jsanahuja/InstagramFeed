@@ -35,15 +35,17 @@
         'margin': 0.5,
         'image_size': 640,
         'lazy_load': false,
-      'on_error': console.error,
-      // a localstorage prefix that is used to identify keys that have been set by InstagramFeed.
-      'cache_prefix': 'igf_',
-      // cache entries will be returned from the cache until this amount of time has passed.
-      'cache_for': '30:min',
+        'on_error': console.error,
+        // a localstorage prefix that is used to identify keys that have been set by InstagramFeed.
+        'cache_prefix': 'igf_',
+        // cache entries will be returned from the cache until this amount of time has passed.
+        'cache_for': '30:min',
+        // set this to true to turn on internal localStorage caching, reducing the possibility that 
       // set this to true to turn on internal localStorage caching, reducing the possibility that 
-      // you’ll hit issue #25 / error #4: https://github.com/jsanahuja/jquery.instagramFeed/issues/25
-      'cache_use': false,
-  };
+        // set this to true to turn on internal localStorage caching, reducing the possibility that 
+        // you’ll hit issue #25 / error #4: https://github.com/jsanahuja/jquery.instagramFeed/issues/25
+        'cache_use': false,
+    };
 
     var image_sizes = {
         "150": 0,
