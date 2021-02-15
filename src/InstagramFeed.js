@@ -101,9 +101,10 @@
               xhr = new XMLHttpRequest();
 
           var _this = this;
+          // compose the cache key based on what kind of thing InstagramFeed is pulling
           var key = (_this.is_tag) ? 't-'+_this.options.tag : 'u-'+_this.options.username,
           // do we have a cached version of the data pull available in local storage?
-          data = _this.cache(key);
+          data = (_this.options.cache_use === true) ? _this.cache(key) : null;
           // we have cached data, pass it to the callback
           if(data !== null){
             callback(data, _this);
