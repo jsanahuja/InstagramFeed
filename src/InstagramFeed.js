@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.5.0
+ * @version 1.6.0
  *
  * @author jsanahuja <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja10@gmail.com>
