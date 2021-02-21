@@ -218,6 +218,49 @@
                         <td>Enables displaying captions for each post as overlay on hover</td>
                     </tr>
                     <tr>
+                      <td class="d-flex flex-wrap">
+                          <code class="text-bold flex-grow-1">caption_styles</code>
+                      </td>
+                      <td><em>Object</em></td>
+                      <td><code class="text-small" >{ <br />
+                        <span class="text-success text-small text-italic">
+                          &nbsp;&nbsp;// Caption styles; text/position:
+                        </span><br />
+                        <span class="text-small">
+                          &nbsp;&nbsp;'font-size': '0.8rem', <br />
+                          &nbsp;&nbsp;'color': 'black', <br />
+                          &nbsp;&nbsp;'background-color': 'hsla(0, 100%, 100%, 0.8)', <br />
+                          &nbsp;&nbsp;'text-align': 'center', <br />
+                          &nbsp;&nbsp;'padding': '1%', <br />
+                          &nbsp;&nbsp;'overflow-y': 'auto', <br />
+                          &nbsp;&nbsp;'overflow-x': 'hidden', <br />
+                        </span>
+                        <span class="text-success text-small text-italic">
+                          &nbsp;&nbsp;// Danger Will Robinson!
+                        </span><br />
+                        <span class="text-small">
+                          &nbsp;&nbsp;'position': 'absolute', <br />
+                          &nbsp;&nbsp;'left': '0', <br />
+                          &nbsp;&nbsp;'right': '0', <br />
+                          &nbsp;&nbsp;'bottom': '0', <br />
+                          &nbsp;&nbsp;'max-height': '100%', <br />
+                        </span>
+                        <span class="text-success text-small text-italic">
+                          &nbsp;&nbsp;// Here be dragons&hellip;
+                        </span><br />
+                        <span class="text-small">
+                          &nbsp;&nbsp;'content': 'attr(data-caption)', <br />
+                        </span>
+                    }</code></td>
+                      <td>
+                        <p> 
+                          Allows styling of the caption. You can override a default property, add more properties, or remove a property by passing in a <code>null</code> value; see <a href="#example1-tab">Example 1</a>. 
+                        </p>
+                        <p>
+                          You can pass in a string if you want to, however, anything you pass in will only be applied to the <code>a[data-caption]:hover::after</code> selector.</td>
+                        </p>
+                    </tr>
+                    <tr>
                         <td class="d-flex flex-wrap">
                             <code class="text-bold flex-grow-1">display_igtv</code>
                         </td>
@@ -381,7 +424,7 @@
                     <div id="instagram-feed1" class="instagram_feed"></div>
                     <div class="section_code py-3">
                         <div>Code:</div>
-                        <pre><code class="language-html">&lt;script src="dist/InstagramFeed.min.js"&gt;&lt;/script&gt;
+                        <pre><code class="language-javascript">&lt;script src="dist/InstagramFeed.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
     (function(){
         new InstagramFeed({
@@ -391,6 +434,11 @@
             'display_biography': true,
             'display_gallery': true,
             'display_captions': true,
+            'caption_styles': {
+              'font-size': '1.3rem', // override the default font-size
+              'font-weight': 'bold', // add a font weight to the caption styles
+              'text-align': null, // remove the text-alignment default
+            }
             'callback': null,
             'styling': true,
             'items': 8,

@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.6.0
+ * @version 1.6.1
  *
  * @author jsanahuja <bannss1@gmail.com>
  * @contributor csanahuja <csanahuja10@gmail.com>
@@ -27,6 +27,21 @@
         'display_biography': true,
         'display_gallery': true,
         'display_captions': false,
+        'caption_styles': {
+            'font-size': '0.8rem',
+            'color': 'black',
+            'background-color': 'hsla(0, 100%, 100%, 0.8)',
+            'text-align': 'center',
+            'padding': '1%',
+            'overflow-y': 'auto',
+            'overflow-x': 'hidden',
+            'position': 'absolute',
+            'left': '0',
+            'right': '0',
+            'bottom': '0',
+            'max-height': '100%',
+            'content': 'attr(data-caption)',
+        },
         'display_igtv': false,
         'callback': null,
         'styling': true,
@@ -72,6 +87,12 @@
     return function(opts) {
         this.options = Object.assign({}, defaults);
         this.options = Object.assign(this.options, opts);
+        if(opts.caption_styles){
+            // make sure that we got the full default.caption styles written into this.options, instead of the override value
+            this.options.caption_styles = Object.assign({}, defaults.caption_styles);
+            // merge the override value into the full defaults
+            this.options.caption_styles = Object.assign(this.options.caption_styles, opts.caption_styles);
+        }
         this.is_tag = this.options.username == "";
 
         this.valid = true;
@@ -349,6 +370,28 @@
             return (this.is_tag ? data.name : data.username) + " image ";
         }
 
+        this.caption_style = function(){
+            var styles = this.options.caption_styles,
+                compiled = '';
+            // if we were passed an object then process it into a string 
+            if(typeof styles === 'object'){
+                for (const [prop, value] of Object.entries(styles)) {
+                    // if null was passed in for the value on a property then skip the given property in the output
+                    if(value !== null){
+                        // make sure that we got a string in the value, can't overwrite value because error: "Uncaught TypeError: Assignment to constant variable."
+                        var style = new String(value);
+                        // compiled += `${prop}: ${value};`; // stupid IE 11: https://caniuse.com/?search=string%20interpolation
+                        compiled += prop + ':' + style + ';';  
+                    }
+                }
+            }
+            else if (styles !== null){
+              // make sure that styles is a string on the way out
+              compiled = new String(styles);
+            }
+            return compiled;
+        }
+
         this.display = function(data) {
             // Styling
             var html = "",
@@ -365,23 +408,8 @@
                 };
                 // Caption Styling
                 if(this.options.display_captions){
-                    html += "<style>\
-                        a[data-caption]:hover::after {\
-                            content: attr(data-caption);\
-                            text-align: center;\
-                            font-size: 0.8rem;\
-                            color: black;\
-                            position: absolute;\
-                            left: 0;\
-                            right: 0;\
-                            bottom: 0;\
-                            padding: 1%;\
-                            max-height: 100%;\
-                            overflow-y: auto;\
-                            overflow-x: hidden;\
-                            background-color: hsla(0, 100%, 100%, 0.8);\
-                        }\
-                    </style>";
+                    var caption_styles = this.caption_style();
+                    html += "<style> a[data-caption]:hover::after { " + caption_styles + " } </style>";
                 }
             } else {
                 styles = {
