@@ -32,7 +32,7 @@
         'margin': 0.5,
         'image_size': 640,
         'lazy_load': false,
-        'cache_time': 120,
+        'cache_time': 360,
         'on_error': console.error
     };
 
