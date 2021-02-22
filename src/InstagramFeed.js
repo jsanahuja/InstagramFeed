@@ -1,10 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 1.4.0
- *
- * @author jsanahuja <bannss1@gmail.com>
- * @contributor csanahuja <csanahuja10@gmail.com>
+ * @version 2.0.0
  *
  * https://github.com/jsanahuja/InstagramFeed
  *
@@ -35,6 +32,7 @@
         'margin': 0.5,
         'image_size': 640,
         'lazy_load': false,
+        'cache_time': 120,
         'on_error': console.error
     };
 
@@ -56,6 +54,7 @@
         '`': '&#x60;',
         '=': '&#x3D;'
     };
+    
     function escape_string(str){
         return str.replace(/[&<>"'`=\/]/g, function (char) {
             return escape_map[char];
@@ -96,11 +95,26 @@
                         }
                         data = JSON.parse(data.substr(0, data.length - 1));
                         data = data.entry_data.ProfilePage || data.entry_data.TagPage;
-                        if(typeof data === "undefined"){
-                            _this.options.on_error("InstagramFeed: It looks like YOUR network has been temporary banned because of too many requests. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25", 4);
-                            return;
+
+                        var skipCaching = false;
+                        if (typeof data === "undefined") {
+                            var cache_data_raw = localStorage.getItem(_this.cache_data_key);
+                            if (cache_data_raw !== null) {
+                                data = JSON.parse(cache_data_raw);
+                                skipCaching = true;
+                            }
+        
+                            _this.options.on_error("Instagram Feed: Your network has been temporary banned by Instagram because of too many requests. Consider increasing your 'cache_time'. See https://github.com/jsanahuja/jquery.instagramFeed/issues/25 and https://github.com/jsanahuja/jquery.instagramFeed/issues/101", 4);
+                            if (!data) return;
+                        }else{
+                            data = data[0].graphql.user || data[0].graphql.hashtag;
                         }
-                        data = data[0].graphql.user || data[0].graphql.hashtag;
+
+                        if (!skipCaching && _this.options.cache_time > 0) {
+                            localStorage.setItem(_this.cache_data_key, JSON.stringify(data));
+                            localStorage.setItem(_this.cache_data_key_cached, new Date().getTime());
+                        }
+
                         callback(data, _this);
                     } else {
                         _this.options.on_error("InstagramFeed: Unable to fetch the given user/tag. Instagram responded with the status code: " + xhr.statusText, 5);
@@ -261,14 +275,37 @@
         };
 
         this.run = function() {
-            this.get(function(data, instance) {
-                if(instance.options.container != ""){
-                    instance.display(data);
+            var cache_data = null;
+            this.cache_data_key = 'InstagramFeed_' + (this.is_tag ? 't_' + this.options.tag : 'u_' + this.options.username);
+            this.cache_data_key_cached = this.cache_data_key + '_cached';
+
+            if (this.options.cache_time > 0) {
+                var cached_time = localStorage.getItem(this.cache_data_key_cached);
+                if (cached_time !== null && parseInt(cached_time) + 1000 * 60 * this.options.cache_time > new Date().getTime()) {
+                    var cache_data_raw = localStorage.getItem(this.cache_data_key);
+                    if (cache_data_raw !== null) {
+                        cache_data = JSON.parse(cache_data_raw);
+                    }
                 }
-                if(typeof instance.options.callback === "function"){
-                    instance.options.callback(data);
+            }
+
+            if (cache_data !== null) {
+                if(this.options.container != ""){
+                    this.display(cache_data);
                 }
-            });
+                if(typeof this.options.callback === "function"){
+                    this.options.callback(cache_data);
+                }
+            }else{
+                this.get(function(data, instance) {
+                    if(instance.options.container != ""){
+                        instance.display(data);
+                    }
+                    if(typeof instance.options.callback === "function"){
+                        instance.options.callback(data);
+                    }
+                });
+            }
         };
 
         if (this.valid) {
