@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8">
     <title>InstagramFeed</title>
@@ -34,31 +36,31 @@
         .bg-primary-2 {
             background-color: #3779B3;
         }
-        
+
         .bg-secondary-2 {
             background: #cbdbe8;
         }
-        
+
         .text-underline {
             text-decoration: underline;
         }
-        
+
         .text-bold {
             font-weight: 700;
         }
-        
+
         .text-italic {
             font-style: italic;
         }
-        
+
         .text-small {
             font-size: 0.8em;
         }
-        
+
         .flex-grow-1 {
             flex-grow: 1;
         }
-        
+
         #btn-top {
             position: fixed;
             z-index: 999;
@@ -70,11 +72,11 @@
             opacity: .66;
             display: none;
         }
-        
+
         .instagram_feed {
             overflow: hidden;
         }
-        
+
         #jsonHere {
             max-height: 60vh;
             overflow: auto;
@@ -89,8 +91,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-8">
                     <h1 class="text-white m-0"> Documentation InstagramFeed </h1>
-                    <p class="text-white m-0">Instagram Feed without access token. We like Instagram but hate his API
-                    </p>
+                    <p class="text-white m-0">Instagram Feed without access token. We like Instagram but hate his API</p>
                     <ul class="list-inline menu-navigation pt-3">
                         <li class="list-inline-item"><a class="text-white" href="#options">Options</a></li>
                         <li class="list-inline-item"><a class="text-white" href="#examples">Examples</a></li>
@@ -99,7 +100,7 @@
                 <div class="col-xs-12 col-md-4">
                     <ul class="list-unstyled text-md-right">
                         <li>
-                            <a class="text-white text-underline d-flex align-items-center" target="_blank" rel="noopener" href="https://www.sowecms.com/demos/InstagramFeed/">
+                            <a class="text-white text-underline d-flex align-items-center" target="_blank" rel="noopener" href="https://github.com/jsanahuja/InstagramFeed">
 
                                 <span class="mr-2 flex-grow-1">Visit our repository</span>
                                 <svg class="octicon octicon-mark-github v-align-middle" fill="white" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true">
@@ -158,26 +159,44 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="d-flex flex-wrap">
-                            <code class="text-bold flex-grow-1">username</code>
+                        <td>
+                            <code class="text-bold flex-grow-1">username</code><br/>
                             <span class="text-danger text-small text-italic">Required / Optional</span>
                         </td>
                         <td><em>String</em></td>
                         <td><code>null</code></td>
-                        <td>Instagram username from where to retrieve the feed. Required if <span class="text-small text-italic">tag</span> is not defined.</td>
+                        <td>Instagram username from where to retrieve the feed. Required if <span class="text-small text-italic">tag</span>, <span class="text-small text-italic">location</span> and <span class="text-small text-italic">user_id</span> are not defined.</td>
                     </tr>
                     <tr>
-                        <td class="d-flex flex-wrap">
-                            <code class="text-bold flex-grow-1">tag</code>
+                        <td>
+                            <code class="text-bold flex-grow-1">tag</code><br/>
                             <span class="text-danger text-small text-italic">Required / Optional</span>
                         </td>
                         <td><em>String</em></td>
                         <td><code>null</code></td>
-                        <td>Instagram tag from where to retrieve the feed. Required if <span class="text-small text-italic">username</span> is not defined.</td>
+                        <td>Instagram tag from where to retrieve the feed. Required if <span class="text-small text-italic">username</span>, <span class="text-small text-italic">location</span> and <span class="text-small text-italic">user_id</span> are not defined.</td>
                     </tr>
                     <tr>
-                        <td class="d-flex flex-wrap">
-                            <code class="text-bold flex-grow-1">container</code>
+                        <td>
+                            <code class="text-bold flex-grow-1">location</code><br/>
+                            <span class="text-danger text-small text-italic">Required / Optional</span>
+                        </td>
+                        <td><em>String</em></td>
+                        <td><code>null</code></td>
+                        <td>Instagram location '<span class="text-small">{id}/{slug}</span>' from where to retrieve the feed. Required if <span class="text-small text-italic">username</span>, <span class="text-small text-italic">tag</span> and <span class="text-small text-italic">user_id</span> are not defined.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code class="text-bold flex-grow-1">user_id</code><br/>
+                            <span class="text-danger text-small text-italic">Required / Optional</span>
+                        </td>
+                        <td><em>String</em></td>
+                        <td><code>null</code></td>
+                        <td>Instagram user ID for GraphQL API. Required if <span class="text-small text-italic">username</span>, <span class="text-small text-italic">tag</span> and <span class="text-small text-italic">location</span> are not defined. <strong class="text-danger">Not recommended as Instagram is CORS restricted again</strong></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code class="text-bold flex-grow-1">container</code><br/>
                             <span class="text-danger text-small text-italic">Required / Optional</span>
                         </td>
                         <td><em>String</em></td>
@@ -185,13 +204,13 @@
                         <td>Selector where to place the feed. Required if callback is not defined.</td>
                     </tr>
                     <tr>
-                        <td class="d-flex flex-wrap">
-                            <code class="text-bold flex-grow-1">callback</code>
+                        <td>
+                            <code class="text-bold flex-grow-1">callback</code><br/>
                             <span class="text-danger text-small text-italic">Required / Optional</span>
                         </td>
-                        <td><em>function</em></td>
+                        <td><em>function(data)</em></td>
                         <td><code>null</code></td>
-                        <td>Callback function with all the data fetched from instagram. Required if container is not defined. If container is defined this function is called before rendering (an on ready event)</td>
+                        <td>Callback function with all the data fetched from instagram. Required if container is not defined.</td>
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
@@ -199,7 +218,7 @@
                         </td>
                         <td><em>Boolean</em></td>
                         <td><code>true</code></td>
-                        <td>Enables displaying the profile</td>
+                        <td>Enables displaying the profile. Not compatible when loading from GraphQL API with <span class="text-small text-italic">user_id</span></td>
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
@@ -207,7 +226,7 @@
                         </td>
                         <td><em>Boolean</em></td>
                         <td><code>true</code></td>
-                        <td>Enables displaying the biography. Not compatible when loading a <span class="text-small text-italic">tag</span> feed</td>
+                        <td>Enables displaying the biography. Not compatible when loading a <span class="text-small text-italic">tag</span>, <span class="text-small text-italic">location</span> or <span class="text-small text-italic">user_id</span></td>
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
@@ -231,7 +250,15 @@
                         </td>
                         <td><em>Boolean</em></td>
                         <td><code>false</code></td>
-                        <td>Enables displaying the IGTV feed if available. Not compatible when loading a <span class="text-small text-italic">tag</span> feed</td>
+                        <td>Enables displaying the IGTV feed if available. Not compatible when loading a <span class="text-small text-italic">tag</span> or from GraphQL API with <span class="text-small text-italic">user_id</span></td>
+                    </tr>
+                    <tr>
+                        <td class="d-flex flex-wrap">
+                            <code class="text-bold flex-grow-1">max_tries</code>
+                        </td>
+                        <td><em>number [Int]</em></td>
+                        <td><code>8</code></td>
+                        <td>Number of tries to fetch Instagram data until throwing. Useful to avoid arbitrary CORS issues.</td>
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
@@ -287,7 +314,10 @@
                         </td>
                         <td><em>String [url]</em></td>
                         <td><code>https://www.instagram.com/</code></td>
-                        <td>URL where to fetch the data. Useful if instagram changes CORS policy</td>
+                        <td>
+                            URL where to fetch the data. Useful if instagram changes CORS policy. <strong class="text-danger">Recommended as Instagram is CORS restricted again. Set to:</strong><br/>
+                            <span class="text-danger text-small text-italic">'https://images' + ~~(Math.random() * 3333) + '-focus-opensocial.googleusercontent.com/gadgets/proxy?container=none&url=https://www.instagram.com/'</span>
+                        </td>
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
@@ -295,7 +325,7 @@
                         </td>
                         <td><em>number [Int]</em></td>
                         <td><code>360</code></td>
-                        <td>Instagram response cache expiry time in minutes</td>
+                        <td>Instagram response cache expiry time in minutes. <strong>Increase this if you get banned too often</strong>.</td>
                     </tr>
                     <tr>
                         <td class="d-flex flex-wrap">
@@ -366,6 +396,7 @@
             'display_biography': true,
             'display_gallery': true,
             'display_captions': true,
+            'max_tries': 8,
             'callback': null,
             'styling': true,
             'items': 8,
@@ -376,7 +407,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -404,7 +435,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -432,7 +463,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -457,7 +488,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -486,7 +517,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -533,7 +564,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -543,7 +574,7 @@
                     <div class="instagram_feed info">
                         <p>This is the format you will get.</p>
                         <pre id="jsonHere"><code class="language-json">
- </code></pre>
+</code></pre>
                     </div>
                     <div class="section_code py-3">
                         <div>Code:</div>
@@ -558,7 +589,7 @@
         });
     })();
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -592,7 +623,7 @@
         });
     });
 &lt;/script&gt;
- </code></pre>
+</code></pre>
                     </div>
                 </div>
 
@@ -625,6 +656,7 @@
                 'display_biography': true,
                 'display_gallery': true,
                 'display_captions': true,
+                'max_tries': 8,
                 'callback': null,
                 'styling': true,
                 'items': 8,
