@@ -1,7 +1,7 @@
 /*
  * InstagramFeed
  *
- * @version 3.0.1
+ * @version 3.0.2
  *
  * https://github.com/jsanahuja/InstagramFeed
  *
@@ -312,11 +312,12 @@
                 for (var i = 0; i < max; i++) {
                     var url = "https://www.instagram.com/p/" + imgs[i].node.shortcode,
                         image, type_resource, 
-                        caption = escape_string(parse_caption(imgs[i], data));
+                        caption = parse_caption(imgs[i], data);
 
                     if(caption === false){
                         caption = (options.type == "userid" ? '' : options.id) + " image";
                     }
+                    caption = escape_string(caption);
 
                     switch (imgs[i].node.__typename) {
                         case "GraphSidecar":
@@ -351,11 +352,12 @@
                 html += '<div class="instagram_igtv">';
                 for (var i = 0; i < max; i++) {
                     var url = 'https://www.instagram.com/p/' + igtv[i].node.shortcode,
-                        caption = escape_string(parse_caption(igtv[i], data));
+                        caption = parse_caption(igtv[i], data);
 
                     if(caption === false){
                         caption = (options.type == "userid" ? '' : options.id) + " image";
                     }
+                    caption = escape_string(caption);
 
                     html += '<a href="' + url + '"' + (options.display_captions ? ' data-caption="' + caption + '"' : '') + ' rel="noopener" target="_blank"' + styles.gallery_image_link + '>';
                     html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + igtv[i].node.thumbnail_src + '" alt="' + caption + '"' + styles.gallery_image + ' />';
