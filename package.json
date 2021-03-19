@@ -1,38 +1,46 @@
 {
-  "name": "InstagramFeed",
-  "description": "Instagram Feed without access token. Not using the Instagram API",
-  "homepage": "https://github.com/jsanahuja/InstagramFeed",
-  "version": "1.0.0",
-  "keywords": [
-    "instagram",
-    "feed",
-    "InstagramFeed",
-    "without",
-    "access",
-    "token"
-  ],
-  "author": {
-    "name": "Javier Sanahuja",
-    "email": "bannss1@gmail.com"
-  },
-  "contributors": [
-    {
-      "name": "Cristian Sanahuja",
-      "email": "csanahuja@gmail.com"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jsanahuja/InstagramFeed.git"
-  },
-  "license": "MIT",
-  "scripts": {
-    "test": "grunt test",
-    "dist": "grunt dist"
-  },
-  "devDependencies": {
-    "grunt": "^1.0.4",
-    "grunt-contrib-qunit": "^3.1.0",
-    "grunt-node-minify": "^1.5.0"
-  }
+    "name": "@jsanahuja/instagramfeed",
+    "description": "Instagram Feed without access token. Not using the Instagram API",
+    "homepage": "https://github.com/jsanahuja/InstagramFeed",
+    "version": "3.0.2",
+    "keywords": [
+        "instagram",
+        "feed",
+        "InstagramFeed",
+        "without",
+        "access",
+        "token"
+    ],
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "author": {
+        "name": "Javier Sanahuja",
+        "email": "bannss1@gmail.com"
+    },
+    "contributors": [
+        {
+            "name": "Cristian Sanahuja",
+            "email": "csanahuja10@gmail.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jsanahuja/InstagramFeed.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "test": "grunt test",
+        "build": "grunt build"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.3",
+        "@babel/preset-env": "^7.8.3",
+        "babel-preset-minify": "^0.5.1",
+        "grunt": "^1.0.4",
+        "grunt-babel": "^8.0.0",
+        "grunt-contrib-qunit": "^3.1.0"
+    },
+    "main": "dist/InstagramFeed.min.js",
+    "module": "dist/InstagramFeed.min.js"
 }

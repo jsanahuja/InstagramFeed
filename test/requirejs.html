@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>RequireJS QUnit Test</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+</head>
+
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <div style="display:none" id="instagram-feed1"></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script>
+        require.config({
+            paths: {
+                'InstagramFeed': '../dist/InstagramFeed.min',
+            }
+        });
+
+        require(["InstagramFeed"], function(InstagramFeed) {
+            QUnit.test("Test1", function(assert) {
+                var failed = false;
+                try {
+                    var obj = new InstagramFeed({
+                        'username': 'instagram',
+                        'container': document.getElementById("instagram-feed1"),
+                        'display_profile': true,
+                        'display_biography': true,
+                        'display_gallery': true,
+                        'get_raw_json': false,
+                        'callback': null,
+                        'styling': true,
+                        'items': 8,
+                        'items_per_row': 4,
+                        'margin': 1
+                    });
+                    failed = !obj.valid;
+                } catch (e) {
+                    failed = e;
+                }
+                assert.ok(failed === false, "Test1 : " + failed);
+            });
+        });
+    </script>
+</body>
+
+</html>

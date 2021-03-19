@@ -1,26 +1,12 @@
-<!--
- * InstagramFeed
- *
- * @version 1.0.0
- *
- * @author Javier Sanahuja Liebana <bannss1@gmail.com>
- * @contributor csanahuja <csanahuja@gmail.com>
- *
- * https://github.com/jsanahuja/InstagramFeed
- *
- * We use jQuery to run the tests. It is not a library dependency!
- *
- *-->
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>QUnit Example</title>
+    <title>QUnit Test</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
 </head>
 
@@ -34,12 +20,11 @@
     <div style="display:none" id="instagram-feed4"></div>
     <div style="display:none" id="instagram-feed5"></div>
 
-    <script src="../src/polyfills.js"></script>
     <script src="../src/InstagramFeed.js"></script>
     <script>
-        (function ($) {
-            $(window).on('load', function () {
-                QUnit.test("Test1", function (assert) {
+        (function($) {
+            $(window).on('load', function() {
+                QUnit.test("Test1", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -48,6 +33,7 @@
                             'display_profile': true,
                             'display_biography': true,
                             'display_gallery': true,
+                            'display_captions': true,
                             'get_raw_json': false,
                             'callback': null,
                             'styling': true,
@@ -61,7 +47,7 @@
                     }
                     assert.ok(failed === false, "Test1 : " + failed);
                 });
-                QUnit.test("Test2", function (assert) {
+                QUnit.test("Test2", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -70,6 +56,7 @@
                             'display_profile': false,
                             'display_biography': false,
                             'display_gallery': true,
+                            'display_captions': false,
                             'get_raw_json': false,
                             'callback': null,
                             'styling': true,
@@ -84,7 +71,7 @@
                     assert.ok(failed === false, "Test2 : " + failed);
                 });
 
-                QUnit.test("Test3", function (assert) {
+                QUnit.test("Test3", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -107,7 +94,7 @@
                     assert.ok(failed === false, "Test3 : " + failed);
                 });
 
-                QUnit.test("Test4", function (assert) {
+                QUnit.test("Test4", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -131,13 +118,12 @@
                     assert.ok(failed === false, "Test4 : " + failed);
                 });
 
-                QUnit.test("Test5", function (assert) {
+                QUnit.test("Test5", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
                             'username': 'travisci',
-                            'get_data': true,
-                            'callback': function (json) {
+                            'callback': function(json) {
                                 document.getElementById("instagram-feed5").innerHTML = json;
                             }
                         });
@@ -148,7 +134,7 @@
                     assert.ok(failed === false, "Test5 : " + failed);
                 });
 
-                QUnit.test("Test6", function (assert) {
+                QUnit.test("Test6", function(assert) {
                     var failed = false;
                     try {
                         var obj = new InstagramFeed({
@@ -156,6 +142,7 @@
                             'container': document.getElementById("instagram-feed4"),
                             'display_profile': true,
                             'display_gallery': true,
+                            'display_captions': true,
                             'items': 100,
                             'items_per_row': 5,
                             'margin': 0.5
@@ -167,24 +154,16 @@
                     assert.ok(failed === false, "Test6 : " + failed);
                 });
 
-                QUnit.test("Test7", function (assert) {
+                QUnit.test("Test7", function(assert) {
                     var obj = new InstagramFeed({});
                     assert.ok(obj.valid === false, "Test7 : " + obj.valid === false);
                 });
 
-                QUnit.test("Test8", function (assert) {
+                QUnit.test("Test8", function(assert) {
                     var obj = new InstagramFeed({
                         "username": "travisci"
                     });
                     assert.ok(obj.valid === false, "Test8 : " + obj.valid === false);
-                });
-
-                QUnit.test("Test9", function (assert) {
-                    var obj = new InstagramFeed({
-                        "username": "travisci",
-                        "get_data": true
-                    });
-                    assert.ok(obj.valid === false, "Test9 : " + obj.valid === false);
                 });
             });
         })(jQuery);
