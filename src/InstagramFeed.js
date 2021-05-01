@@ -58,7 +58,7 @@
         '`': '&#x60;',
         '=': '&#x3D;'
     };
-    
+
     function escape_string(str){
         return str.replace(/[&<>"'`=\/]/g, function (char) {
             return escape_map[char];
@@ -67,9 +67,9 @@
 
     function parse_caption(igobj, data){
         if (
-            typeof igobj.node.edge_media_to_caption.edges[0] !== "undefined" && 
-            typeof igobj.node.edge_media_to_caption.edges[0].node !== "undefined" && 
-            typeof igobj.node.edge_media_to_caption.edges[0].node.text !== "undefined" && 
+            typeof igobj.node.edge_media_to_caption.edges[0] !== "undefined" &&
+            typeof igobj.node.edge_media_to_caption.edges[0].node !== "undefined" &&
+            typeof igobj.node.edge_media_to_caption.edges[0].node.text !== "undefined" &&
             igobj.node.edge_media_to_caption.edges[0].node.text !== null
         ) {
             return igobj.node.edge_media_to_caption.edges[0].node.text;
@@ -96,7 +96,7 @@
      */
     function get_cache(options, last_resort){
         var read_cache = last_resort || false;
-        
+
         if (!last_resort && options.cache_time > 0) {
             var cached_time = localStorage.getItem(options.cache_time_key);
             if(cached_time !== null && parseInt(cached_time) + 1000 * 60 * options.cache_time > new Date().getTime()){
@@ -116,7 +116,7 @@
     function set_cache(options, data){
         var cached_time = localStorage.getItem(options.cache_time_key),
             cache = options.cache_time != 0 && (cached_time === null || parseInt(cached_time) + 1000 * 60 * options.cache_time > new Date().getTime());
-        
+
         if(cache){
             localStorage.setItem(options.cache_data_key, JSON.stringify(data));
             localStorage.setItem(options.cache_time_key, new Date().getTime());
@@ -256,7 +256,7 @@
                 gallery_image: ' style="width:100%;"',
                 gallery_image_link: ' style="width:' + width + '%; margin:' + options.margin + '%;position:relative; display: inline-block; height: 100%;"'
             };
-            
+
             if(options.display_captions){
                 html += "<style>\
                     a[data-caption]:hover::after {\
@@ -320,7 +320,7 @@
                 html += "<div class='instagram_gallery'>";
                 for (var i = 0; i < max; i++) {
                     var url = "https://www.instagram.com/p/" + imgs[i].node.shortcode,
-                        image, type_resource, 
+                        image, type_resource,
                         caption = parse_caption(imgs[i], data);
 
                     if(caption === false){
@@ -375,7 +375,7 @@
                 html += '</div>';
             }
         }
-        
+
         options.container.innerHTML = html;
     }
 
@@ -414,7 +414,7 @@
         if(typeof opts.display_profile !== "undefined" && opts.display_profile && options.user_id != ""){
             console.warn("Instagram Feed: 'display_profile' is not available using 'user_id' (GraphQL API)");
         }
-        
+
         if(typeof opts.display_biography !== "undefined" && opts.display_biography && (options.tag != "" || options.location != "" || options.user_id != "")){
             console.warn("Instagram Feed: 'display_biography' is not available unless you are loading an user ('username' parameter)");
         }
