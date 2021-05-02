@@ -29,6 +29,7 @@
         'display_igtv': false,
         'max_tries': 8,
         'callback': null,
+        'cdnUrlResolver': null,
         'styling': true,
         'items': 8,
         'items_per_row': 4,
@@ -57,7 +58,7 @@
         '`': '&#x60;',
         '=': '&#x3D;'
     };
-    
+
     function escape_string(str){
         return str.replace(/[&<>"'`=\/]/g, function (char) {
             return escape_map[char];
@@ -66,9 +67,9 @@
 
     function parse_caption(igobj, data){
         if (
-            typeof igobj.node.edge_media_to_caption.edges[0] !== "undefined" && 
-            typeof igobj.node.edge_media_to_caption.edges[0].node !== "undefined" && 
-            typeof igobj.node.edge_media_to_caption.edges[0].node.text !== "undefined" && 
+            typeof igobj.node.edge_media_to_caption.edges[0] !== "undefined" &&
+            typeof igobj.node.edge_media_to_caption.edges[0].node !== "undefined" &&
+            typeof igobj.node.edge_media_to_caption.edges[0].node.text !== "undefined" &&
             igobj.node.edge_media_to_caption.edges[0].node.text !== null
         ) {
             return igobj.node.edge_media_to_caption.edges[0].node.text;
@@ -95,7 +96,7 @@
      */
     function get_cache(options, last_resort){
         var read_cache = last_resort || false;
-        
+
         if (!last_resort && options.cache_time > 0) {
             var cached_time = localStorage.getItem(options.cache_time_key);
             if(cached_time !== null && parseInt(cached_time) + 1000 * 60 * options.cache_time > new Date().getTime()){
@@ -115,7 +116,7 @@
     function set_cache(options, data){
         var cached_time = localStorage.getItem(options.cache_time_key),
             cache = options.cache_time != 0 && (cached_time === null || parseInt(cached_time) + 1000 * 60 * options.cache_time > new Date().getTime());
-        
+
         if(cache){
             localStorage.setItem(options.cache_data_key, JSON.stringify(data));
             localStorage.setItem(options.cache_time_key, new Date().getTime());
@@ -228,6 +229,14 @@
         }
     }
 
+    function resolveUrl(url, callback) {
+        if (typeof callback === 'function') {
+            return callback(url);
+        }
+
+        return url;
+    }
+
     /**
      * Rendering
      */
@@ -247,7 +256,7 @@
                 gallery_image: ' style="width:100%;"',
                 gallery_image_link: ' style="width:' + width + '%; margin:' + options.margin + '%;position:relative; display: inline-block; height: 100%;"'
             };
-            
+
             if(options.display_captions){
                 html += "<style>\
                     a[data-caption]:hover::after {\
@@ -283,7 +292,7 @@
          */
         if(options.display_profile && options.type !== "userid"){
             html += '<div class="instagram_profile"' + styles.profile_container + '>';
-            html += '<img class="instagram_profile_image" src="' + data.profile_pic_url  + '" alt="'+ (options.type == "tag" ? data.name + ' tag pic' : data.username + ' profile pic') + '"' + styles.profile_image + (options.lazy_load ? ' loading="lazy"' : '') + ' />';
+            html += '<img class="instagram_profile_image" src="' + resolveUrl(data.profile_pic_url, options.cdnUrlResolver)  + '" alt="'+ (options.type == "tag" ? data.name + ' tag pic' : data.username + ' profile pic') + '"' + styles.profile_image + (options.lazy_load ? ' loading="lazy"' : '') + ' />';
             if(options.type == "tag"){
                 html += '<p class="instagram_tag"' + styles.profile_name + '><a href="https://www.instagram.com/explore/tags/' + options.tag + '/" rel="noopener" target="_blank">#' + options.tag + '</a></p>';
             }else if(options.type == "username"){
@@ -311,7 +320,7 @@
                 html += "<div class='instagram_gallery'>";
                 for (var i = 0; i < max; i++) {
                     var url = "https://www.instagram.com/p/" + imgs[i].node.shortcode,
-                        image, type_resource, 
+                        image, type_resource,
                         caption = parse_caption(imgs[i], data);
 
                     if(caption === false){
@@ -334,7 +343,7 @@
                     }
 
                     html += '<a href="' + url + '"' + (options.display_captions ? ' data-caption="' + caption + '"' : '') + ' class="instagram-' + type_resource + '" rel="noopener" target="_blank"' + styles.gallery_image_link + '>';
-                    html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + image + '" alt="' + caption + '"' + styles.gallery_image + ' />';
+                    html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + resolveUrl(image, options.cdnUrlResolver) + '" alt="' + caption + '"' + styles.gallery_image + ' />';
                     html += '</a>';
                 }
                 html += '</div>';
@@ -360,13 +369,13 @@
                     caption = escape_string(caption);
 
                     html += '<a href="' + url + '"' + (options.display_captions ? ' data-caption="' + caption + '"' : '') + ' rel="noopener" target="_blank"' + styles.gallery_image_link + '>';
-                    html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + igtv[i].node.thumbnail_src + '" alt="' + caption + '"' + styles.gallery_image + ' />';
+                    html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + resolveUrl(igtv[i].node.thumbnail_src, options.cdnUrlResolver) + '" alt="' + caption + '"' + styles.gallery_image + ' />';
                     html += '</a>';
                 }
                 html += '</div>';
             }
         }
-        
+
         options.container.innerHTML = html;
     }
 
@@ -405,7 +414,7 @@
         if(typeof opts.display_profile !== "undefined" && opts.display_profile && options.user_id != ""){
             console.warn("Instagram Feed: 'display_profile' is not available using 'user_id' (GraphQL API)");
         }
-        
+
         if(typeof opts.display_biography !== "undefined" && opts.display_biography && (options.tag != "" || options.location != "" || options.user_id != "")){
             console.warn("Instagram Feed: 'display_biography' is not available unless you are loading an user ('username' parameter)");
         }
@@ -416,6 +425,11 @@
 
         if (options.callback == null && options.container == "") {
             options.on_error("Instagram Feed: Error, neither container found nor callback defined.", 2);
+            return false;
+        }
+
+        if (options.cdnUrlResolver != null && typeof options.cdnUrlResolver !== 'function') {
+            options.on_error("Instagram Feed: options.cdnUrlResolver must be a function or null.");
             return false;
         }
 

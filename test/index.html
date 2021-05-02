@@ -165,6 +165,28 @@
                     });
                     assert.ok(obj.valid === false, "Test8 : " + obj.valid === false);
                 });
+
+                QUnit.test("Test9", function (assert) {
+                    var obj = new InstagramFeed({
+                        'username': 'travisci',
+                        'container': document.getElementById("instagram-feed5"),
+                        'display_profile': true,
+                        'cdnUrlResolver': function(url) {
+                            return 'https://your-cdn.com/' + url;
+                        }
+                    });
+                    assert.ok(obj.valid === true, "Test10 : " + obj.valid === true);
+                });
+
+                QUnit.test("Test10", function (assert) {
+                    var obj = new InstagramFeed({
+                        'username': 'travisci',
+                        'container': document.getElementById("instagram-feed5"),
+                        'display_profile': true,
+                        'cdnUrlResolver': 'invalidValue'
+                    });
+                    assert.ok(obj.valid === false, "Test10 : " + obj.valid === false);
+                });
             });
         })(jQuery);
     </script>
