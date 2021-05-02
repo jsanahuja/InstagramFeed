@@ -369,7 +369,7 @@
                     caption = escape_string(caption);
 
                     html += '<a href="' + url + '"' + (options.display_captions ? ' data-caption="' + caption + '"' : '') + ' rel="noopener" target="_blank"' + styles.gallery_image_link + '>';
-                    html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + resolveUrl(igtv[i].node.thumbnail_src) + '" alt="' + caption + '"' + styles.gallery_image + ' />';
+                    html += '<img' + (options.lazy_load ? ' loading="lazy"' : '') + ' src="' + resolveUrl(igtv[i].node.thumbnail_src, options.cdnUrlResolver) + '" alt="' + caption + '"' + styles.gallery_image + ' />';
                     html += '</a>';
                 }
                 html += '</div>';
