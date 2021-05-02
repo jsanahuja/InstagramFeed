@@ -1,4 +1,4 @@
-⚠️ This repository has been archived ⚠️
+# ⚠️ This repository has been archived ⚠️
 
 The focus of this repository was to provide an easy and ready to use plugin to display an Instagram Feed but since latest Instagram changes, this no longer makes sense. Please, move to an official API based plugin.
 
